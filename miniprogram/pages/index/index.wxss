@@ -1,0 +1,110 @@
+/* miniprogram/pages/index/index.wxss */
+.index{
+  position: relative;
+  height: 100%;
+}
+.top-bg{
+  width: 100%;
+  height: 200rpx;
+  background-color: #ffda44;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}
+.container{
+  height: calc(100% - 250rpx);
+  margin: 0 20rpx;
+  width: calc(100% - 80rpx);
+  position: absolute;
+  top: 150rpx;
+  left: 0;
+  background-color: #fff;
+  border-radius: 8rpx;
+  overflow: scroll;
+  padding: 0 20rpx;
+  /* margin-bottom: 120rpx; */
+}
+.top-title{
+  font-size: 26rpx;
+  color: #444;
+  padding: 0 20rpx;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+.year{
+  width: 160rpx;
+}
+.type{
+  width: calc(50% - 140rpx);
+  padding-left: 40rpx;
+
+}
+
+.month{
+  font-size: 32rpx;
+  color: #000;
+  width: 160rpx;
+  position: relative;
+  border-right: 0.5rpx solid #000;
+
+}
+.top-desc{
+  padding: 0 20rpx;
+  width: 100%;
+  height:60rpx;
+  line-height:60rpx;
+}
+
+.month-num{
+  font-size: 48rpx;
+}
+.shouru,.zhichu{
+  width: calc(50% - 140rpx);
+  padding-left: 40rpx;
+}
+.triangle{
+  position: absolute;
+  right: 40rpx;
+  top: 28rpx;
+}
+
+.day-title{
+  color: #989898;
+  font-size: 20rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+
+}
+
+.day{
+  margin-right: 10rpx;
+}
+.day-shouru{
+  margin-left: 40rpx;
+}
+
+.booking-item{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  color: #343233;
+  margin-bottom: 30rpx;
+  margin-top: 10rpx;
+}
+.booking-img{ 
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin-right: 30rpx;
+}
+.day-booking{
+  margin-bottom: 20rpx;
+}
+.actiev-border{
+  border-bottom: 0.5rpx solid #aaa;
+}
+.box{
+  width: calc(100% - 100rpx);
+  padding-bottom: 10rpx;
+
+}

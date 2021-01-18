@@ -1,0 +1,149 @@
+/* miniprogram/pages/booking/booking.wxss */
+page{
+  height: calc(100% - 74rpx);
+}
+.booking{
+  height: 100%;
+}
+.booking-tab{
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  background-color: #ffda44;
+  justify-content: center;
+  z-index: 1;
+  
+}
+.tab-item{
+  width: 120rpx;
+  padding: 10rpx 30rpx  20rpx 30rpx;
+  color: #343233;
+ font-size: 36rpx;
+  text-align: center;
+}
+.tab-item.active{
+  border-bottom:2rpx solid #343233;
+}
+.cancel{
+  height: 74rpx;
+  line-height: 74rpx;
+ position: absolute;
+ top: 0;
+ right: 20rpx;
+}
+.booking-type{
+  width: 100%;
+  overflow: scroll;
+  padding-top: 20rpx;
+}
+.type-item{
+  width: 25%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.img{
+  width: 100rpx;
+  height: 100rpx;
+  background-color: #eee;
+  border-radius: 50%;
+  margin-bottom: 10rpx;
+
+}
+
+.text{
+  color: #343233;
+  font-size-adjust: 28rpx;
+}
+
+.content{
+  height:100%;
+  margin-top: 74rpx;
+}
+.booking-type.active{
+  padding-bottom: 480rpx;
+  
+}
+.content>swiper{
+  height: 100%;
+}
+.swiper-item{
+  overflow: scroll !important;
+}
+
+.active-icon>.img{
+  transform: scale(1.1);
+  
+}
+.active-icon>.text{
+  font-weight: bold;
+  
+}
+.keyboard-top{
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+  border-top: 1rpx #e3ebea solid;
+}
+.comment{
+  font-size:28rpx ;
+}
+.num{
+  font-size: 48rpx;
+  font-weight: 200;
+  max-width: 200rpx;
+  overflow: hidden;
+  height: 80rpx;
+
+}
+.weui-input{
+  height: 100%;
+  line-height: 70rpx;
+  font-size: 28rpx;
+}
+.keyboard{
+  position: fixed;
+  bottom:-470rpx;
+  left: 0;
+  right: 0;
+  background-color: #f1f4f6;
+
+}
+.keyboard.active{
+  bottom: 0;
+}
+.delete-item{
+  display:flex ;
+  justify-content: center;
+  align-items: center;
+}
+.delete{
+  width: 60rpx;
+
+}
+.key-item.confirm{
+  background-color: #ffda44;
+  border: 1rpx solid #ffda44;
+}
+.key-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.key-item{
+  flex: 1;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  border: 1rpx solid #e3ebea;
+  box-sizing: border-box;
+}
+
+.booking-date{
+  font-size: 28rpx;
+}

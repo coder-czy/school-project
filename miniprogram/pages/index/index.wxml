@@ -1,0 +1,56 @@
+<!--miniprogram/pages/index/index.wxml-->
+
+<tabbar tabbar="{{tabbar}}"></tabbar> 
+
+<view class="index">
+  <view class="top-bg">
+    <view class="top-title clearfix">
+      <view class="fl year">{{year}}年</view>
+      <view class="fl type">收入</view>
+      <view class="fl type">支出</view>
+    </view>
+    <view class="top-desc clearfix">
+      
+      <view class="fl month ">
+      <!-- 时间选择器 -->
+      <picker mode="date" value="{{time}}" fields="month" start="1990-01-01" end="{{end}}" bindchange="bindTimeChange">
+          <text class="month-num">{{month}}</text>月
+          <view class="triangle"></view>
+        </picker>
+
+
+      </view>
+      <view class="fl shouru">{{shouru}}</view>
+      <view class="fl zhichu">{{zhichu}}</view>
+    </view>
+  </view>
+
+  <!-- 每月记账内容区域 -->
+  <view class="container">
+      <view class="day-booking" wx:for="{{bookingData}}" wx:key="index" >
+        <view class="day-title clearfix">
+          <view class="fl day">{{item.dateItem}}</view>
+          <view class="fl week">{{item.week}}</view>
+          <view class="fr day-shouru" wx:if="{{item.shouru>0}}">收入：{{item.shouru}}</view>
+          <view class="fr day-zhichu" wx:if="{{item.zhichu>0}}">支出：{{item.zhichu}}</view>
+        </view>
+
+        <view class="booking-item clearfix " bindtap="goDetail" data-id="{{i._id}}" wx:for="{{item.data}}" wx:for-item="i" wx:key="i">
+          <view class="fl booking-img">
+            <image src="{{i.typeIcons.icon}}" class="auto-img" mode="widthFix"></image>
+          </view>
+          <view class="fl box clearfix {{item.data.length>1 ? 'actiev-border' : ''}}">
+
+            <view class="fl booking-mark">{{i.comment=="" ? i.typeIcons.title : i.comment}}</view>
+            <view class="fr booking-money">{{i.titles.type=='zhichu' ? '-'+i.money : i.money}}</view>
+          </view>
+        </view>
+    
+      </view>
+    
+  </view>
+  </view>
+  
+
+
+ 

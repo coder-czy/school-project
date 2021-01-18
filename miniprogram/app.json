@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/chart/chart",
+    "pages/index/index",
+    "pages/bookingDetail/bookingDetail",
+    "pages/history/history",
+    "pages/booking/booking",
+    "pages/profile/profile",
+    "pages/shouru/shouru",
+    "pages/zhichu/zhichu"
+  ],
+  "window": {
+    "backgroundColor": "#ffda44",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffda44",
+    "navigationBarTitleText": "金鱼记账",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#ffffff",
+    "color": "#7c7c7c",
+    "selectedColor": "#ffda44",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "components/tabbarComponent/icon/tab1.png",
+        "selectedIconPath": "components/tabbarComponent/icon/tab1-active.png"
+      },
+      {
+        "pagePath": "pages/chart/chart",
+        "text": "图表",
+        "iconPath": "components/tabbarComponent/icon/tab2.png",
+        "selectedIconPath": "components/tabbarComponent/icon/tab2-active.png"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "明细",
+        "iconPath": "components/tabbarComponent/icon/tab3.png",
+        "selectedIconPath": "components/tabbarComponent/icon/tab3-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "components/tabbarComponent/icon/tab4.png",
+        "selectedIconPath": "components/tabbarComponent/icon/tab4-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

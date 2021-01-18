@@ -1,0 +1,31 @@
+<!--miniprogram/pages/bodetail-iconokingDetail/bookingDetail.wxml-->
+<view class="detail-top">
+  <view class="detail-icon">
+    <image class="detail-icon auto-img" mode="widthFix" src="{{bookingData.typeIcons.icon}}"></image>
+  </view>
+  <view class="detail-text">{{bookingData.typeIcons.title}}</view>
+</view>
+
+<view class="detail-content">
+  <view class="content-list clearfix">
+    <view class="list-title fl">类型</view>
+    <view class="list-data fl">{{bookingData.titles.title}}</view>
+  </view>
+  <view class="content-list clearfix">
+    <view class="list-title fl">金额</view>
+    <view class="list-data fl">{{bookingData.money}}</view>
+  </view>
+  <view class="content-list clearfix">
+    <view class="list-title fl">日期</view>
+    <view class="list-data fl">{{bookingData.date}}</view>
+  </view>
+  <view class="content-list clearfix">
+    <view class="list-title fl">备注</view>
+    <view class="list-data fl">{{bookingData.comment}}</view>
+  </view>
+</view>
+
+<view class="bottom-btn">
+<view class="btn" bindtap="edit">编辑</view>
+<view class="btn" bindtap="delete">删除</view>
+</view>

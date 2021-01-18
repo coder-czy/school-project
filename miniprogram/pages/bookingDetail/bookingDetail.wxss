@@ -1,0 +1,71 @@
+/* miniprogram/pages/bookingDetail/bookingDetail.wxss */
+
+.detail-top{
+background-color: #ffda44;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+.detail-icon{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #eee;
+  /* margin: 20rpx; */
+  /* vertical-align: middle; */
+
+}
+
+.detail-text{
+  color: #3a3732;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.detail-content{
+  padding: 0 30rpx 50rpx 30rpx ;
+  border: 1rpx solid #ededed;
+
+}
+.content-list{
+
+  height: 110rpx;
+  line-height: 110rpx;
+  font-size: 28rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+
+}
+.content-list:last-child{
+  border-bottom:none ;
+}
+.list-title{
+  color: #a3a3a3;
+  margin-right: 30rpx;
+
+}
+.list-data{
+  color: #3f3d3e;
+} 
+.bottom-btn{
+position: fixed;
+display: flex;
+justify-content: center;
+align-items: center;
+left: 0;
+right: 0;
+bottom: 0;
+border-top: 1rpx solid #dddddd;
+}
+.btn{
+  flex: 1;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #3c3a3b;
+  font-size: 28rpx;
+}
+.btn:first-child{
+border-right: 1rpx solid #cecece;
+}

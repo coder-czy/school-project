@@ -1,0 +1,15 @@
+<!--miniprogram/pages/shouru/shouru.wxml-->
+<view class="booking-type clearfix">
+    <view class="type-item fl">
+      <view class="img">
+        <image src="cloud://dev-account-0g8ivom75f465c18.6465-dev-account-0g8ivom75f465c18-1304469880/images/icon_bonus.png"
+        mode="widthFix" class="auto-img"></image>
+      </view>
+      <view class="text">交通</view>
+    </view>
+    <view class="type-item fl">
+      <view class="img"></view>
+      <view class="text">交通</view>
+    </view>
+ 
+  </view>

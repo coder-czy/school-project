@@ -1,0 +1,31 @@
+page{
+  height: 100%;
+  background-color: #f7f7f7;
+
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.clearfix::after{
+content: '';
+display: block;
+clear: both;
+}
+
+.auto-img{
+  display: block;
+  width: 100%;
+  height: auto;
+
+}
+
+.triangle{
+  width: 0;
+  height: 0;
+  border: 14rpx solid transparent;
+  border-top: 20rpx solid #000;
+}
+

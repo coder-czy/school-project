@@ -1,0 +1,54 @@
+<!--miniprogram/pages/history/history.wxml-->
+<tabbar tabbar="{{tabbar}}"></tabbar>
+
+<!-- 结余 -->
+<view class="bill">
+
+  <!-- 背景区域内容 -->
+  <view class="bill-bg">
+    <view class="year">
+          <!-- 时间选择器 -->
+          <picker mode="date" value="{{time}}" fields="year" start="1990-01-01" end="2100-01-01" bindchange="bindTimeChange">
+               {{year}}年 <view class="triangle"></view>
+            </picker>
+            <view class="main-text">结余</view>
+    </view>
+    <!-- <view class="surplus-text">结余</view> -->
+    <view class="surplus">{{surplus}}</view>
+    <view class="classify clearfix">
+      <view class="shouru fl">
+        <view class="text">收入 <text class="num">{{shouru}}</text></view>
+      
+      </view>
+      <view class="zhichu fl">
+        <view class="text">支出 <text class="num">{{zhichu}}</text></view>
+      
+      </view>
+    </view>
+  </view>
+
+  <!-- 12个月份的具体数据 -->
+  <view class="bill-content">
+    <view class="month-list clearfix">
+      <view class="month fl">月份</view>
+      <view class="list-item fl">收入</view>
+      <view class="list-item fl">支出</view>
+      <view class="list-item fl">结余</view>
+      <view class="arrow fl">
+      </view>
+    
+    </view>
+    <view>
+      <view class="month-list list clearfix" wx:for="{{bookingData}}" wx:key="index">
+        <view class="month fl">{{item.month}}月</view>
+        <view class="list-item fl">{{item.shouru}}</view>
+        <view class="list-item fl">{{item.zhichu}}</view>
+        <view class="list-item fl">{{item.surplus}}</view>
+        <view class="arrow fr">
+          <image src="../../images/arrow.png" mode="widthFix" class="auto-img"></image>
+        </view>
+      
+      </view>
+    </view>
+  </view>
+</view>

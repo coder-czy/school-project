@@ -1,0 +1,22 @@
+<!--miniprogram/pages/chart/chart.wxml-->
+<tabbar tabbar="{{tabbar}}"></tabbar>
+
+<view class="tab clearfix">
+  <view class="pay-type fl clearfix">
+    <view bindtap="changePay" data-pay="zhichu" class="pay-item fl {{payType=='zhichu'? 'active' : ''}}">支出</view>
+    <view bindtap="changePay" data-pay="shouru" class="pay-item fl {{payType=='shouru'? 'active' : ''}}">收入</view>
+  </view>
+  <view class="time-type fr clearfix">
+    <view bindtap="changeTime" data-time="day" class="time-item fl {{timeType=='day'? 'active' : ''}}">日</view>
+    <view bindtap="changeTime" data-time="month" class="time-item fl {{timeType=='month'? 'active' : ''}}">月</view>
+    <view bindtap="changeTime" data-time="year" class="time-item fl {{timeType=='year'? 'active' : ''}}">年</view>
+  </view>
+</view>
+
+<!-- <view class="pie">
+      <canvas canvas-id="pieCanvas"style="width:{{width+'px'}}; height:620rpx;" ></canvas>
+</view> -->
+
+<view style="width:100%;height:200px;">
+  <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
+</view>

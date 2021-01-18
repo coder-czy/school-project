@@ -1,0 +1,102 @@
+<!--miniprogram/pages/booking/booking.wxml-->
+<view class="booking">
+  <!-- 顶部tab切换 -->
+  <view class="booking-tab clearfix">
+    <view class="tab-item {{currentIndex===index ? 'active' : ''}}" wx:for="{{tabData}}" wx:key="index" 
+    data-index="{{index}}" bindtap="changeTab">{{item.title}}</view>
+    <view class="cancel fr" wx:if="{{showKeyboard}}" bindtap="cancel">取消</view>
+  </view>
+  <!-- 滚动的区域 -->
+  <view class="content">
+    <swiper  current="{{currentIndex}}" bindchange="changeItem">
+      <!-- 支出类型图标 -->
+        <swiper-item class="swiper-item">
+          <view class="booking-type clearfix  {{ showKeyboard ? 'active' : ''}}">
+            <view class="type-item fl {{zhichuIconIndex===index ? 'active-icon' : ''}}" wx:for="{{zhichu}}" wx:key="index"
+             data-index="{{index}}" catchtap="changeIcon">
+              <view class="img">
+                <image src="{{item.icon}}"
+                mode="widthFix" class="auto-img"></image>
+              </view>
+              <view class="text">{{item.title}}</view>
+            </view>
+              <view class="type-item fl">
+                <view class="img">
+                  <image src="cloud://dev-account-0g8ivom75f465c18.6465-dev-account-0g8ivom75f465c18-1304469880/images/setting.png"
+                  mode="widthFix" class="auto-img"></image>
+                </view>
+                <view class="text">设置</view>
+              </view>
+ 
+           </view>
+        </swiper-item>
+
+        <!-- 收入类型图标 -->
+        <swiper-item>
+          <view class="booking-type clearfix">
+            <view class="type-item fl  {{shouruIconIndex===index ? 'active-icon' : ''}}" wx:for="{{shouru}}" wx:key="index" 
+            data-index="{{index}}"  bindtap="changeIcon">
+              <view class="img">
+                <image src="{{item.icon}}"
+                mode="widthFix" class="auto-img"></image>
+              </view>
+              <view class="text">{{item.title}}</view>
+            </view>
+            <view class="type-item fl">
+              <view class="img">
+                <image src="cloud://dev-account-0g8ivom75f465c18.6465-dev-account-0g8ivom75f465c18-1304469880/images/setting.png"
+                mode="widthFix" class="auto-img"></image>
+              </view>
+              <view class="text">设置</view>
+            </view>
+ 
+           </view>
+        </swiper-item>
+    </swiper>
+
+  </view>
+
+  <!-- 键盘区域 -->
+    <view class="keyboard {{showKeyboard ? 'active' :''}}">
+      <view class="keyboard-top clearfix"><text class="fl comment">备注：</text> 
+        <input class="weui-input fl" bindinput="getInputVal" value="{{comment}}" maxlength="20" placeholder="点击写备注..."/>
+        <text class="num fr">{{bookingNum}}</text>
+      </view>
+      <view class="keyboard-stage">
+        <view class="key-list">
+          <view class="key-item" data-msg="7" bindtap="getNum">7</view>
+          <view class="key-item" data-msg="8" bindtap="getNum">8</view>
+          <view class="key-item" data-msg="9" bindtap="getNum">9</view>
+          <view class="key-item">
+               <!-- 时间选择器 -->
+            <picker mode="date" value="{{time}}" fields="day" start="1990-01-01" end="2100-01-01" bindchange="bindTimeChange">
+              <view class="booking-date"> {{bookingDate}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="key-list">
+          <view class="key-item" data-msg="4" bindtap="getNum">4</view>
+          <view class="key-item" data-msg="5" bindtap="getNum">5</view>
+          <view class="key-item" data-msg="6" bindtap="getNum">6</view>
+          <view class="key-item" data-msg="+" bindtap="addNum">+</view>
+        </view>
+        <view class="key-list">
+          <view class="key-item" data-msg="1" bindtap="getNum">1</view>
+          <view class="key-item" data-msg="2" bindtap="getNum">2</view>
+          <view class="key-item" data-msg="3" bindtap="getNum">3</view>
+          <view class="key-item" data-msg="-" bindtap="subNum">-</view>
+        </view>
+        <view class="key-list">
+          <view class="key-item" data-msg="." bindtap="addDot">.</view>
+          <view class="key-item" data-msg="0" bindtap="getNum">0</view>
+          <view class="key-item delete-item"  bindtap="deleteNum">
+          <view class="delete">
+            <image src="../../images/delete.png" class="auto-img delete-img" mode="widthFix" ></image>
+          </view>
+          </view>
+          <view class="key-item confirm" data-msg="7" bindtap="comfirm">{{confirmText}}</view>
+        </view>
+      </view>
+    </view>
+
+</view>

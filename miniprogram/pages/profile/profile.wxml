@@ -1,0 +1,99 @@
+<!--miniprogram/pages/profile/profile.wxml-->
+<!-- tabbar栏 -->
+<tabbar tabbar="{{tabbar}}"></tabbar>
+
+<view class="profile">
+  <view class="top-bg">
+    <view class="profile-top clearfix">
+    <view class="fl avatar"></view>
+    <view class="fl nickname">菜鸟</view>
+    <view class="fr attendance">
+      <view class="attendance-img fl">
+        <image src="../../images/daka.png" mode="widthFix" class="a-img auto-img"></image>
+      </view> 
+      <view class="fr text">打卡</view> 
+    </view>
+    </view>
+
+
+    <view class="profile-bottom clearfix">
+      <view class="profile-item fl">
+        <view class="item-num">0</view>
+        <view class="item-text">以连续打卡</view>
+      </view>
+      <view class="profile-item fl">
+        <view class="item-num">1</view>
+        <view class="item-text">记账总天数</view>
+      </view>
+      <view class="profile-item fl">
+        <view class="item-num">2</view>
+        <view class="item-text">记账总笔数</view>
+      </view>
+    </view>
+  </view>
+  <!-- 白色内容区域 -->
+  <view class="container">
+    <view class="bill">
+      <view class="bill-title clearfix">
+        <view class="fl title">账单</view>
+        <view class="fr arrow"><image src="../../images/arrow.png" mode="widthFix" class="auto-img"></image></view>
+      </view>
+      <view class="bill-content clearfix">
+        <view class="fl left">
+          <view class="fl month ">
+          <text class="month-num">12</text>月
+      </view>
+        </view>
+        <view class="fr right clearfix">
+          <view class="fl content-item">
+            <view class="item-title">收入</view>
+            <view class="item-num">0.00</view>
+          </view>
+          <view class="fl content-item">
+            <view class="item-title">支出</view>
+            <view class="item-num">0.00</view>
+          </view>
+          <view class="fl content-item">
+            <view class="item-title">结余</view>
+            <view class="item-num">0.00</view>
+          </view>
+        </view>
+      </view>
+     
+    </view>
+    
+    <!-- 预算 -->
+    <view class="budget">
+      <view class="budget-box clearfix">
+        <view class="fl budget-title">12月总预算</view>
+       <view class="fr clearfix">
+         <text class="all">查看全部</text>
+        <view class="fr budget-arrow arrow"><image src="../../images/arrow.png" mode="widthFix" class="all-img auto-img"></image></view>
+       </view>
+      </view>
+
+      <!-- 预算内容 -->
+      <view class="budget-content clearfix">
+        <view class="content-left fl">
+          <view class="round"></view>
+        </view>
+
+        <view class="content-right fr">
+          <view class="surplus-budget clearfix">
+            <view class="surplus-title fl">剩余预算:</view>
+            <view class="surplus-num fr">100.00</view>
+          </view>
+          <view class="month-budget clearfix">
+            <view class="surplus-title fl">本月预算:</view>
+            <view class="surplus-title fr">100.00</view>
+          </view>
+          <view class="month-budget clearfix">
+            <view class="surplus-title fl">本月支出:</view>
+            <view class="surplus-title fr">10.00</view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>

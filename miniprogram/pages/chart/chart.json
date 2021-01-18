@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "tabbar":"/components/tabbarComponent/tabbar",
+    "ec-canvas": "../../ec-canvas/ec-canvas"
+  },
+  "navigationBarTitleText": "图表"
+}
