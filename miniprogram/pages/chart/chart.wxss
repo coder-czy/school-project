@@ -16,7 +16,7 @@
   border-radius: 8rpx;
   border: 1rpx solid #343233;
   overflow: hidden;
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
 }
 .pay-item{
   color: pay-item;
@@ -30,13 +30,14 @@
   color: pay-item;
   font-size: 28rpx;
   padding: 10rpx 0;
-  width: 33%;
+  width: 33.33%;
   text-align: center;
 
 }
 .time-item:nth-child(2){
   border-left: 1rpx solid #343434;
   border-right: 1rpx solid #343434;
+  box-sizing: border-box;
 }
 .pay-item.active{
   background-color: #343434;
@@ -47,13 +48,13 @@
   color: #ffda44;
 }
 .pie{
-  height: 620rpx;
+  height: 820rpx;
   /* background-color: #fff; */
   margin-top: 20rpx;
 }
 
 ec-canvas {
   width: 100%;
-  height: 50%;
+  height: 70%;
   background: #eee;
 }
