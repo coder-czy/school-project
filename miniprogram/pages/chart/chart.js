@@ -5,6 +5,13 @@ import * as echarts from '../../ec-canvas/echarts';
 const app =getApp()
 var wxCharts = require('../../js/wxcharts.js')
 
+let data =[
+  {value: 130, name: '语文'},
+  {value: 110, name: '数学'},
+  {value: 120, name: '英语'},
+  {value: 99, name: '化学'},
+  {value: 98, name: '物理'}
+]
 function initChart(canvas, width, height, dpr) {
   const chart = echarts.init(canvas, null, {
     width: width,
@@ -25,9 +32,9 @@ function initChart(canvas, width, height, dpr) {
       {
           name: '访问来源',
           type: 'pie',
-          radius: ['50%', '80%'],
+          radius: ['50%', '90%'],
           avoidLabelOverlap: false,
-          top: '15%',
+          top: '20%',
          
           label: {
               show: false,
@@ -43,13 +50,7 @@ function initChart(canvas, width, height, dpr) {
           labelLine: {
               show: false
           },
-          data: [
-              {value: 1048, name: '搜索引擎'},
-              {value: 735, name: '直接访问'},
-              {value: 580, name: '邮件营销'},
-              {value: 484, name: '联盟广告'},
-              {value: 300, name: '视频广告'}
-          ]
+          data
       }
   ]
   };
@@ -103,7 +104,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+      console.log(data);
   },
 
   // 改变支付类型
@@ -200,7 +201,7 @@ Page({
     var currentDate = this.data.date.split('-');
     var today = new Date();
 
-    if (this.data.dateTitle == '月') {
+    if (this.data.timeType == 'month') {
       start = currentDate[0] + '-' + currentDate[1] + '-01';
 
       if (currentDate[0] == today.getFullYear()) {
@@ -260,7 +261,7 @@ Page({
         end: end,
       });
 
-    } else if (this.data.dateTitle == '年') {
+    } else if (this.data.timeType == 'year') {
       start = currentDate[0] + '-01-01';
       if (currentDate[0] == today.getFullYear()) {
 

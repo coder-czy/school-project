@@ -17,6 +17,6 @@
       <canvas canvas-id="pieCanvas"style="width:{{width+'px'}}; height:620rpx;" ></canvas>
 </view> -->
 
-<view style="width:100%;height:200px;">
+<view style="width:100%;height:250px;">
   <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
 </view>
