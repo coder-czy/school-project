@@ -15,7 +15,7 @@ function initChart(canvas, width, height, dpr) {
   var option = {
     tooltip: {
       trigger: 'item',
-      formatter: '{a} <br/>{b}: {c} ({d}%)'
+      formatter: '{b}:({d}%)'
   },
   legend: {
       top: '5%',
