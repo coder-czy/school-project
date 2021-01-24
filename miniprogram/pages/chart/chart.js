@@ -42,8 +42,8 @@ function initChart(canvas, width, height, dpr) {
           },
           emphasis: {
               label: {
-                  show: false,
-                  fontSize: '40',
+                  show: true,
+                  fontSize: '20',
                   fontWeight: 'bold'
               }
           },
@@ -248,18 +248,14 @@ Page({
 
       }
 
-      this.getBookingData('get_booking_bymonth', {
+      this.getBookingData('get_bookingByMonth', {
         start: start,
         end: end,
         titles: titles
       });
 
 
-      //获取总收入和支出
-      this.getTotal('get_booking_bymonth', {
-        start: start,
-        end: end,
-      });
+  
 
     } else if (this.data.timeType == 'year') {
       start = currentDate[0] + '-01-01';
@@ -271,27 +267,20 @@ Page({
         end = currentDate[0] + '-12-31';
       }
 
-      this.getBookingData('get_booking_bymonth', {
+      this.getBookingData('get_bookingByMonth', {
         start: start,
         end: end,
         titles: titles
       });
 
-      this.getTotal('get_booking_bymonth', {
-        start: start,
-        end: end,
-      });
 
     } else {
       start = this.data.date;
-      this.getBookingData('get_booking', {
+      this.getBookingData('get_bookingData', {
         date: start,
         titles: titles
       });
 
-      this.getTotal('get_booking', {
-        date: start
-      });
     }
 
     this.setData({
@@ -303,14 +292,12 @@ Page({
 
   getBookingData: function (fnName, condition) {
 
-    wx.showLoading({
-      title: '加载中...'
-    })
+    wx.showNavigationBarLoading()
     wx.cloud.callFunction({
       name: fnName,
       data: condition,
       success: res => {
-        wx.hideLoading();
+        wx.hideNavigationBarLoading()
         console.log('res ==> ', res);
 
         var bookingDatas = {};
@@ -365,10 +352,11 @@ Page({
         });
 
           console.log('bookingDataType ==> ', this.data.bookingDataType);
-        this.drawPie(this.data.bookingDataType)
+        
       },
       fail: err => {
-        wx.hideLoading();
+        wx.hideNavigationBarLoading()
+
         console.log('err ==> ', err);
       }
     })

@@ -147,7 +147,7 @@ Page({
         
       }
       this.setData({
-        bookingData:arr,
+        bookingData:arr.reverse(),
         shouru:allShouru.toFixed(2),
         zhichu:allZhichu.toFixed(2)
       })
