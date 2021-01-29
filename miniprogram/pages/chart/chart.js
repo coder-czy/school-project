@@ -1,25 +1,22 @@
 // miniprogram/pages/chart/chart.js
 // 引入canvas插件
 import * as echarts from '../../ec-canvas/echarts';
-
+import { tool } from '../../js/tool.js'
 const app =getApp()
-var wxCharts = require('../../js/wxcharts.js')
-
-let data =[
-  {value: 130, name: '语文'},
-  {value: 110, name: '数学'},
-  {value: 120, name: '英语'},
-  {value: 99, name: '化学'},
-  {value: 98, name: '物理'}
-]
+let wxCharts = require('../../js/wxcharts.js')
+let chart = null
+let data =[{value:100,name:'shju'},
+            {value:150,name:'jsj'}
+  ]
 function initChart(canvas, width, height, dpr) {
-  const chart = echarts.init(canvas, null, {
+  chart = echarts.init(canvas, null, {
     width: width,
     height: height,
     devicePixelRatio: dpr // new
   });
+  chart.showLoading(); // 首次显示加载动画
   canvas.setChart(chart);
-  var option = {
+  let option = {
     tooltip: {
       trigger: 'item',
       formatter: '{b}:({d}%)'
@@ -54,7 +51,7 @@ function initChart(canvas, width, height, dpr) {
       }
   ]
   };
-
+  chart.hideLoading(); // 隐藏加载动画
   chart.setOption(option);
   return chart;
 }
@@ -104,7 +101,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-      console.log(data);
+    let date = tool.formatDate(new Date());
+    this.setData({
+      date : date
+    })
+    this.findBookingDataByDate()
+    
   },
 
   // 改变支付类型
@@ -114,6 +116,9 @@ Page({
     this.setData({
       payType:e.currentTarget.dataset.pay
     })
+
+    this.findBookingDataByDate()
+
   },
 
 
@@ -124,82 +129,27 @@ Page({
     this.setData({
       timeType:e.currentTarget.dataset.time
     })
+    this.findBookingDataByDate()
+
+ 
   },
 
-  // 绘制饼图
-  drawPie:function(series){
-    if(series.length==0){
-      return
-    }
-    const res = wx.getSystemInfoSync();
-
-    this.setData({
-      width:res.screenWidth
-    })
-    new wxCharts({
-      canvasId:'pieCanvas',
-      // type:'pie',
-      /*
-      换成环形
-      */
-     type:'ring',
-     extra:{
-      ringWidth:40,
-      pie:{
-        offsetAngle:-45
-      }
-     },
-      series:series,
-      disablePieStroke: true,
-      width:this.data.width,
-      height:300,
-      dataLabel:true
-    })
-  },
-
-  toggleTitles: function (e) {
-   
-    var condition = {
-      titles: {
-        type: this.data.titles[e.currentTarget.dataset.index].type,
-        title: this.data.titles[e.currentTarget.dataset.index].name
-      }
-    };
-    var fnName = '';
-    if (this.data.endDate == '') {
-      //按日查询
-      fnName = 'get_booking';
-      condition.date = this.data.startDate;
-    } else {
-      fnName = 'get_booking_bymonth';
-      condition.start = this.data.startDate;
-      condition.end = this.data.endDate;
-    }
-
-    this.getBookingData(fnName, condition);
-
-  },
 
 
 
 
   findBookingDataByDate: function () {
 
-    var titles = {};
-    for (var i = 0; i < this.data.titles.length; i++) {
-      if (this.data.titles[i].isActive) {
-        titles = {
-          type: this.data.titles[i].type,
-          title: this.data.titles[i].name
-        }
-        break;
-      }
+   
+   let titles={
+      type:this.data.payType== 'shouru' ? 'shouru' : 'zhichu',
+      title: this.data.payType== 'shouru' ? '收入' : '支出'
     }
-    var start = '';
-    var end = '';
+    let start = '';
+    let end = '';
 
-    var currentDate = this.data.date.split('-');
-    var today = new Date();
+    let currentDate = this.data.date.split('-');
+    let today = new Date();
 
     if (this.data.timeType == 'month') {
       start = currentDate[0] + '-' + currentDate[1] + '-01';
@@ -300,17 +250,17 @@ Page({
         wx.hideNavigationBarLoading()
         console.log('res ==> ', res);
 
-        var bookingDatas = {};
+        let bookingDatas = {};
 
         //分类
-        var totalMoney = 0;
+        let totalMoney = 0;
         res.result.data.forEach(v => {
           totalMoney += Number(v.money)
-          var type = v.typeIcons.type;
+          let type = v.typeIcons.type;
           if (!bookingDatas[type]) {
-              var rgb =[];
-            for(var i=0 ; i<3;i++){
-              var value = Math.ceil(Math.random()*255);
+              let rgb =[];
+            for(let i=0 ; i<3;i++){
+              let value = Math.ceil(Math.random()*255);
               rgb.push(value)
             }
             bookingDatas[type] = {
@@ -337,21 +287,36 @@ Page({
 
         })
 
-        var bData = [];
-        for (var key in bookingDatas) {
+        let bData = [];
+        let chartData = []
+        for (let key in bookingDatas) {
+          let obj ={}
           //处理千分位
-          bookingDatas[key].money = tool.thousandthPlace(bookingDatas[key].money);
+         bookingDatas[key].money = tool.thousandthPlace(bookingDatas[key].money);
           bookingDatas[key].percent = bookingDatas[key].data/totalMoney*100+'%'
           bookingDatas[key].ids = bookingDatas[key].ids.join('@');
           // bookingDatas[key].stroke = false
           bData.push(bookingDatas[key]);
+
+          // 将数据存入data中
+          obj.value = tool.thousandthPlace(bookingDatas[key].money)*1;
+          obj.name =  bookingDatas[key].name
+          chartData.push(obj)
         }
 
         this.setData({
           bookingDataType: bData
         });
+        data = chartData
+        // chart.setOption({
+         
+        //     data:[{value:10,name:'11'},{value:12,name:'22'},{value:15,name:'33'}]  //全局变量
+        
+         
+        // });
 
           console.log('bookingDataType ==> ', this.data.bookingDataType);
+          console.log('ec ==> ', this.data.ec);
         
       },
       fail: err => {
@@ -378,7 +343,7 @@ Page({
 
         //统计收入-支出
         this.data.titles.forEach(v => {
-          var type = v.type;
+          let type = v.type;
           v.money = 0;
           res.result.data.forEach(item => {
             if (type == item.titles.type) {

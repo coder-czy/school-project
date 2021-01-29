@@ -24,6 +24,7 @@
 
 <view class="rank-title">收入排行榜</view>
 
+<view class="rank-content">
 <view class="rank">
   <view class="rank-img">
 
@@ -39,4 +40,53 @@
       <view class="bar" style="width:80%;"></view>
     </view>
   </view>
+</view>
+<view class="rank">
+  <view class="rank-img">
+
+  </view>
+  <view class="rank-right">
+    <view class="content-top clearfix">
+      <view class="title fl">交通</view>
+      <view class="persent fl">100%</view>
+      <view class="count fr">4</view>
+    </view>
+
+    <view class="rank-progress">
+      <view class="bar" style="width:80%;"></view>
+    </view>
+  </view>
+</view>
+<view class="rank">
+  <view class="rank-img">
+
+  </view>
+  <view class="rank-right">
+    <view class="content-top clearfix">
+      <view class="title fl">交通</view>
+      <view class="persent fl">100%</view>
+      <view class="count fr">4</view>
+    </view>
+
+    <view class="rank-progress">
+      <view class="bar" style="width:80%;"></view>
+    </view>
+  </view>
+</view>
+<view class="rank">
+  <view class="rank-img">
+
+  </view>
+  <view class="rank-right">
+    <view class="content-top clearfix">
+      <view class="title fl">交通</view>
+      <view class="persent fl">100%</view>
+      <view class="count fr">4</view>
+    </view>
+
+    <view class="rank-progress">
+      <view class="bar" style="width:80%;"></view>
+    </view>
+  </view>
+</view>
 </view>
