@@ -2,12 +2,11 @@
 // 引入canvas插件
 import * as echarts from '../../ec-canvas/echarts';
 import { tool } from '../../js/tool.js'
+
 const app =getApp()
 let wxCharts = require('../../js/wxcharts.js')
 let chart = null
-let data =[{value:100,name:'shju'},
-            {value:150,name:'jsj'}
-  ]
+let data =[]
 function initChart(canvas, width, height, dpr) {
   chart = echarts.init(canvas, null, {
     width: width,
@@ -19,7 +18,7 @@ function initChart(canvas, width, height, dpr) {
   let option = {
     tooltip: {
       trigger: 'item',
-      formatter: '{b}:({d}%)'
+      formatter: '{b}:{c}元({d}%)'
   },
   legend: {
       top: '5%',
@@ -86,7 +85,16 @@ Page({
 
     ec: {
       onInit: initChart
-    }
+    },
+    // 是否有数据显示
+    isHasData:true,
+
+    // 动态标题
+    title:'支出',
+
+    // 总价格
+    total:0.00
+
 
   },
 
@@ -251,6 +259,16 @@ Page({
         console.log('res ==> ', res);
 
         let bookingDatas = {};
+        if(res.result.data.length>0){
+         this.setData({
+           isHasData:true
+         })
+        }else{
+          this.setData({
+            isHasData:false
+          })
+          return
+        }
 
         //分类
         let totalMoney = 0;
@@ -291,32 +309,56 @@ Page({
         let chartData = []
         for (let key in bookingDatas) {
           let obj ={}
-          //处理千分位
+          //处理千分位 
+          obj.value = bookingDatas[key].money*1
          bookingDatas[key].money = tool.thousandthPlace(bookingDatas[key].money);
-          bookingDatas[key].percent = bookingDatas[key].data/totalMoney*100+'%'
+          bookingDatas[key].percent = (bookingDatas[key].data/totalMoney*100).toFixed(2)+'%'
           bookingDatas[key].ids = bookingDatas[key].ids.join('@');
           // bookingDatas[key].stroke = false
           bData.push(bookingDatas[key]);
 
           // 将数据存入data中
-          obj.value = tool.thousandthPlace(bookingDatas[key].money)*1;
+          // console.log('##',bookingDatas[key].money);
+         
           obj.name =  bookingDatas[key].name
           chartData.push(obj)
         }
 
+        
+
+        // 对数据进行排序
+       let bDataTP =  bData.sort((a,b)=>{
+          return b.data-a.data
+        })
+
+        // 计算总价格
+        this.getTotal(bDataTP)
+
         this.setData({
-          bookingDataType: bData
+          bookingDataType: bDataTP
         });
-        data = chartData
-        // chart.setOption({
-         
-        //     data:[{value:10,name:'11'},{value:12,name:'22'},{value:15,name:'33'}]  //全局变量
+
+        if(this.data.payType=='shouru'){
+          this.setData({
+            title:'收入'
+          })
+        }else{
+          this.setData({
+            title:'支出'
+          })
+        }
+        // console.log('chartData==>',chartData);
+        chart.setOption({
+         series:[{
+           data:chartData //全局变量
+
+         }]
         
          
-        // });
+        });
 
           console.log('bookingDataType ==> ', this.data.bookingDataType);
-          console.log('ec ==> ', this.data.ec);
+          // console.log('ec ==> ', this.data.ec);
         
       },
       fail: err => {
@@ -329,40 +371,51 @@ Page({
   },
 
   //获取收入和支出
-  getTotal: function (fnName, condition) {
-    wx.showLoading({
-      title: '加载中...'
-    })
+  // getTotal: function (fnName, condition) {
+  //   wx.showNavigationBarLoading()
 
-    wx.cloud.callFunction({
-      name: fnName,
-      data: condition,
-      success: res => {
-        wx.hideLoading();
-        console.log('总数 res ==> ', res);
+  //   wx.cloud.callFunction({
+  //     name: fnName,
+  //     data: condition,
+  //     success: res => {
+  //       wx.hideNavigationBarLoading()
+  //       console.log('总数 res ==> ', res);
 
-        //统计收入-支出
-        this.data.titles.forEach(v => {
-          let type = v.type;
-          v.money = 0;
-          res.result.data.forEach(item => {
-            if (type == item.titles.type) {
-              v.money += Number(item.money);
-            }
-          })
-          //处理千分位
-          v.money = tool.thousandthPlace(v.money.toFixed(2));
-        })
+  //       //统计收入-支出
+  //       this.data.titles.forEach(v => {
+  //         let type = v.type;
+  //         v.money = 0;
+  //         res.result.data.forEach(item => {
+  //           if (type == item.titles.type) {
+  //             v.money += Number(item.money);
+  //           }
+  //         })
+  //         //处理千分位
+  //         v.money = tool.thousandthPlace(v.money.toFixed(2));
+  //       })
 
-        this.setData({
-          titles: this.data.titles
-        })
+  //       this.setData({
+  //         titles: this.data.titles
+  //       })
 
-      },
-      fail: err => {
-        wx.hideLoading();
-        console.log('err ==> ', err);
-      }
+  //     },
+  //     fail: err => {
+  //       wx.hideNavigationBarLoading()
+
+  //       console.log('err ==> ', err);
+  //     }
+  //   })
+  // },
+
+
+  getTotal(data){
+    
+   let total = data.reduce((pval,oval)=>{
+      return pval +oval.data
+    },0)
+    // console.log(total);
+    this.setData({
+      total:total.toFixed(2)
     })
   },
 

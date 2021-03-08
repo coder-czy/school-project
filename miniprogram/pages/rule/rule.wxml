@@ -1,0 +1,20 @@
+<!--miniprogram/pages/rule/rule.wxml-->
+<view class="content">
+  <view class="rule">
+1 、每天记完一笔账即算自动打卡成功
+  </view>
+  <view class="rule">
+2 、点击我的页右上角打卡按钮也可以手动打卡
+  </view>
+  <view class="rule">
+3 、每天记账多次只算打卡一次
+  </view>
+  <view class="rule">
+4 、如果中断打卡， 连续打卡记录将会清零
+  </view>
+  <view class="rule">
+5 、连续打卡一定的天数， 可以获得相应的徽章成就
+  </view>
+
+
+</view>

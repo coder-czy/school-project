@@ -8,85 +8,49 @@
   </view>
   <view class="time-type fr clearfix">
     <view bindtap="changeTime" data-time="day" class="time-item fl {{timeType=='day'? 'active' : ''}}">日</view>
-    <view bindtap="changeTime" data-time="month" class="time-item fl {{timeType=='month'? 'active' : ''}}">月</view>
+    <view bindtap="changeTime" data-time="month" class="time-item fl {{timeType=='month' ? 'active' : ''}}">月</view>
     <view bindtap="changeTime" data-time="year" class="time-item fl {{timeType=='year'? 'active' : ''}}">年</view>
   </view>
 </view>
-<view class="total">总支出：200</view>
 
-<!-- <view class="pie">
-      <canvas canvas-id="pieCanvas"style="width:{{width+'px'}}; height:620rpx;" ></canvas>
-</view> -->
+<!-- 内容部分 -->
+<view class="chart-content">
 
-<view class="chart" style="width:100%;height:250px;">
-  <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
-</view>
 
-<view class="rank-title">收入排行榜</view>
-
-<view class="rank-content">
-<view class="rank">
-  <view class="rank-img">
-
+  <view class="total"  wx:if="{{isHasData}}">总{{title}}：{{total}}</view>
+  
+  <!-- <view class="pie">
+        <canvas canvas-id="pieCanvas"style="width:{{width+'px'}}; height:620rpx;" ></canvas>
+  </view> -->
+  
+  <view class="chart {{isHasData ? '' : 'hide'}}" style="width:100%;height:250px;">
+    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
   </view>
-  <view class="rank-right">
-    <view class="content-top clearfix">
-      <view class="title fl">交通</view>
-      <view class="persent fl">100%</view>
-      <view class="count fr">4</view>
+  <view class="empty" wx:if="{{!isHasData}}">
+    <view>您暂时还没有记账，快去记账吧~</view>
+  </view>
+  
+  <view class="rank-title" wx:if="{{isHasData}}" >{{title}}排行榜</view>
+  
+  <!-- 排行榜 -->
+  <view class="rank-content">
+  <view class="rank" wx:for="{{bookingDataType}}" wx:key="index" data-ids="{{item.ids}}"bindtap="viewBookData">
+    <view class="rank-img">
+      <image src="{{item.icon}}" mode="widthFix" class="auto-img"></image>
     </view>
-
-    <view class="rank-progress">
-      <view class="bar" style="width:80%;"></view>
+    <view class="rank-right">
+      <view class="content-top clearfix">
+        <view class="title fl">{{item.name}}</view>
+        <view class="persent fl">{{item.percent}}</view>
+        <view class="count fr">{{item.count}}</view>
+      </view>
+  
+      <view class="rank-progress">
+        <view class="bar" style="width:{{item.percent}};"></view>
+      </view>
     </view>
   </view>
-</view>
-<view class="rank">
-  <view class="rank-img">
-
-  </view>
-  <view class="rank-right">
-    <view class="content-top clearfix">
-      <view class="title fl">交通</view>
-      <view class="persent fl">100%</view>
-      <view class="count fr">4</view>
-    </view>
-
-    <view class="rank-progress">
-      <view class="bar" style="width:80%;"></view>
-    </view>
+  
   </view>
 </view>
-<view class="rank">
-  <view class="rank-img">
 
-  </view>
-  <view class="rank-right">
-    <view class="content-top clearfix">
-      <view class="title fl">交通</view>
-      <view class="persent fl">100%</view>
-      <view class="count fr">4</view>
-    </view>
-
-    <view class="rank-progress">
-      <view class="bar" style="width:80%;"></view>
-    </view>
-  </view>
-</view>
-<view class="rank">
-  <view class="rank-img">
-
-  </view>
-  <view class="rank-right">
-    <view class="content-top clearfix">
-      <view class="title fl">交通</view>
-      <view class="persent fl">100%</view>
-      <view class="count fr">4</view>
-    </view>
-
-    <view class="rank-progress">
-      <view class="bar" style="width:80%;"></view>
-    </view>
-  </view>
-</view>
-</view>

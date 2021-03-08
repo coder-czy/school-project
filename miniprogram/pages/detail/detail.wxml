@@ -1,0 +1,24 @@
+<!--miniprogram/pages/detail/detail.wxml-->
+<view class="my-booking">
+      <view class="list" >
+        <view class="list-item clearfix" wx:for="{{detailBookingData}}" wx:key="index" data-id="{{item._id}}" bindtap="goDetail">
+          <view class="fl list-item-img">
+            <image class="auto-img list-icon" src="{{item.typeIcons.icon}}" mode="widthFix"></image>
+          </view>
+          <view class="fl list-info">
+            <view class="list-item-describe fl">
+              <view class="top-text {{item.comment =='' ? 'not-comment' : ''}}">
+                <text class="type fl">{{item.typeIcons.title}}</text>
+                <text class="fl account">{{item.account}}</text>
+                <text class="date fl">{{item.date}}</text>
+              </view>
+              <view class="comment">{{item.comment}}</view>
+            </view>
+            <view class="list-item-money fr ">
+            <view class="fl ">{{item.titles.type=='shouru' ? '+'+item.money :'-'+item.money }}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+</view>

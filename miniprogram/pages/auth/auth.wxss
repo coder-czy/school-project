@@ -1,0 +1,41 @@
+.auth{
+  height: 100%;
+}
+
+.headView {
+  
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+ 
+}
+
+  
+  .titleText {
+  margin: 40rpx;
+  margin-top: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #020e0f;
+  text-align: center;
+  
+  }
+  
+  .contentText {
+  
+  margin: 20rpx;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  
+  }
+  
+  .authBtn {
+  
+ height: 45px;
+font-size: 17.5px;
+  
+  }
+  

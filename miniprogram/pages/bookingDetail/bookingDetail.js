@@ -1,4 +1,7 @@
 // miniprogram/pages/bookingDetail/bookingDetail.js
+
+import {tool} from '../../js/tool'
+
 Page({
 
   /**
@@ -27,9 +30,14 @@ Page({
     }).then(res=>{
       wx.hideNavigationBarLoading();
       console.log(res);
+
+      // 对数据的时间进行格式化
+      let data = res.result.data
+      data[0].date = tool.formatDate2(data[0].date)
+      console.log(data);
       this.setData({
         id:options.id,
-        bookingData:res.result.data[0]
+        bookingData:data[0]
       })
     }).catch(err=>{
       wx.hideNavigationBarLoading();
@@ -38,8 +46,11 @@ Page({
 
   },
   // 编辑记账信息
-  edit(){
-
+  edit(e){
+    console.log(e);
+    wx.navigateTo({
+      url: '../booking/booking?id='+e.currentTarget.dataset.id,
+    })
   },
   // 删除记账信息
   delete(){

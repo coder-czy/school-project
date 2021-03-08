@@ -32,7 +32,10 @@ Page({
 
     // 总收入和总支出
     shouru:'',
-    zhichu:''
+    zhichu:'',
+
+    // 判断是否有记账数据
+    isHasData:true
 
   },
 
@@ -99,6 +102,18 @@ Page({
       let data = res.result.data
       let allShouru =0
       let allZhichu = 0
+
+      // 判断是否有记账数据
+      if(data.length<=0){
+        this.setData({
+          isHasData:false
+        })
+      }else{
+        this.setData({
+          isHasData:true
+        })
+      }
+
       for(let i=0;i<data.length;i++){
         let keys = Object.keys(bookingData)
         let flag = true
@@ -117,6 +132,8 @@ Page({
           bookingData[data[i].date]=[data[i]]
         }
       }
+
+      
       console.log(bookingData);
 
       // 对数据进一步处理

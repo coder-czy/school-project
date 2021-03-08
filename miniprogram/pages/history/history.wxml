@@ -39,7 +39,7 @@
     
     </view>
     <view>
-      <view class="month-list list clearfix" wx:for="{{bookingData}}" wx:key="index">
+      <view class="month-list list clearfix" wx:for="{{bookingData}}" wx:key="index" bindtap="goMonthDetail">
         <view class="month fl">{{item.month}}月</view>
         <view class="list-item fl">{{item.shouru}}</view>
         <view class="list-item fl">{{item.zhichu}}</view>

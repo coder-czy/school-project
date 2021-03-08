@@ -14,6 +14,8 @@ App({
         // env: 'my-env-id',
         traceUser: true,
       })
+
+      
     }
       // 隐藏系统tabbar
       wx.hideTabBar();
@@ -21,6 +23,15 @@ App({
       // 获取设备信息
       this.getSystemInfo();
 
+      
+    // 授权
+    wx.getSetting({
+      success:res=>{
+        console.log('res==>',res)
+
+        this.globalData.isAuth = res.authSetting['scope.userInfo'];
+      }
+    })
   },
   onShow: function () {
     //隐藏系统tabbar

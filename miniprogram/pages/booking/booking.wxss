@@ -17,14 +17,22 @@ page{
   
 }
 .tab-item{
-  width: 120rpx;
-  padding: 10rpx 30rpx  20rpx 30rpx;
+  height: 70rpx;
+  width: 45%;
+  line-height: 70rpx;
   color: #343233;
- font-size: 36rpx;
   text-align: center;
+  border: 1rpx solid #343434;
+}
+.tab-item:nth-child(1){
+  border-top-left-radius: 70rpx;
+}
+.tab-item:nth-child(2){
+  border-top-right-radius: 70rpx;
 }
 .tab-item.active{
-  border-bottom:2rpx solid #343233;
+  background-color: #343434;
+  color: #ffda44;
 }
 .cancel{
   height: 74rpx;

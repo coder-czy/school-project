@@ -1,4 +1,5 @@
 class Tool{
+
   formatDate(currentDate){
     var year = currentDate.getFullYear();
     var month = currentDate.getMonth()+1;
@@ -7,6 +8,13 @@ class Tool{
     date = date >= 10 ? date : '0' + date
     return year + '-'+month + '-'+ date;
   }
+
+  formatDate2(date){
+   let arr= date.split('-')
+   return `${arr[0]}年${arr[1]}月${arr[2]}日`
+
+  }
+
   thousandthPlace(value){
     var v = value.toString().split('.');
     var valueInt = v[0]
@@ -23,5 +31,8 @@ class Tool{
     }
     return v2;
   }
+
+
+
 }
 export const tool = new Tool()

@@ -26,6 +26,6 @@
 </view>
 
 <view class="bottom-btn">
-<view class="btn" bindtap="edit">编辑</view>
+<view class="btn" bindtap="edit" data-id="{{bookingData._id}}">编辑</view>
 <view class="btn" bindtap="delete">删除</view>
 </view>

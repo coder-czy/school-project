@@ -1,0 +1,70 @@
+.list{
+  background-color: #fff;
+}
+.list-item{
+  padding: 20rpx;
+  margin: 10rpx 0;
+}
+.list-item:nth-child(1){
+  margin-top:0 ;
+}
+.list-item-img{
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #ddd;
+  border-radius: 50%;
+}
+.list-icon{
+  height: 80rpx;
+}
+.list-info{
+  margin-left: 14rpx;
+  height: 80rpx;
+  padding: 10rpx 0 10rox 20rpx;
+  width: calc(100% - 100rpx);
+  border-bottom: 1rpx solid #e8e8e8
+}
+.list-item-money{
+  font-size: 28rpx;
+  line-height: 80rpx;
+  color: #343233;
+}
+/* .list-item-money.shouru{
+  color: #e4393c;
+}
+.list-item-money.zhichu{
+  color: #00b26a;
+} */
+.list-item-describe{
+  color: #666;
+  font-size: 22rpx;
+}
+.top-text{
+  height: 50rpx;
+}
+.comment{
+  height: 30rpx;
+  line-height: 30rpx
+  
+}
+.type{
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-right: 40rpx;
+}
+.not-comment{
+  line-height: 80rpx
+}
+.shouru{
+  color: #e4393c
+}
+.zhichu{
+  color: #00b26a
+}
+.date{
+  margin-left: 40rpx;
+  
+}
+.account{
+width: 80rpx;
+}

@@ -26,7 +26,7 @@
   </view>
 
   <!-- 每月记账内容区域 -->
-  <view class="container">
+  <view class="container" >
       <view class="day-booking" wx:for="{{bookingData}}" wx:key="index" >
         <view class="day-title clearfix">
           <view class="fl day">{{item.dateItem}}</view>
@@ -48,7 +48,11 @@
     
       </view>
     
+      <view class="empty" wx:if="{{!isHasData}}">
+        <view>您暂时还没有记账，快去记账吧~</view>
+      </view>
   </view>
+
   </view>
   
 

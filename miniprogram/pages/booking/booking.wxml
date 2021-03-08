@@ -4,7 +4,7 @@
   <view class="booking-tab clearfix">
     <view class="tab-item {{currentIndex===index ? 'active' : ''}}" wx:for="{{tabData}}" wx:key="index" 
     data-index="{{index}}" bindtap="changeTab">{{item.title}}</view>
-    <view class="cancel fr" wx:if="{{showKeyboard}}" bindtap="cancel">取消</view>
+    <!-- <view class="cancel fr" wx:if="{{showKeyboard}}" bindtap="cancel">取消</view> -->
   </view>
   <!-- 滚动的区域 -->
   <view class="content">

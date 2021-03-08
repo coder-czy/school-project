@@ -160,6 +160,12 @@ Page({
 
 
     })
+  },
+
+  goMonthDetail(){
+    wx.navigateTo({
+      url: '../monthDetail/monthDetail',
+    })
   }
 
 })

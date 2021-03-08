@@ -1,0 +1,66 @@
+<!--miniprogram/pages/monthDetail/monthDetail.wxml-->
+<view class="summary-content">
+
+
+  <view class="detail-top">
+    <view class="top-title">2020年12月账单</view>
+    <view class="stage" bindtap="goAuth">
+
+        <view class="avatar">
+    <image wx:if="{{userInfo.img}}" src="{{userInfo.img}}" mode="widthFix" class="auto-img"></image>
+    </view>
+    <view class="nickname">{{userInfo.nickname||'登录授权'}}</view>
+    </view>
+  
+    <view class="register-history">这是我与金鱼记账相识的第21天</view>
+  </view>
+  
+  <!-- 月结余部分 -->
+  <view class="month-summary">
+    <view class="month-title">本月结余:<text class="month-surplus">-32.35</text></view>
+    
+
+    <view class="month-chart">
+      <view class="chart-title">
+        <view>支出</view>
+        <view>收入</view>
+      </view>
+
+      <view class="chart-prograss">
+        <view class="chart-zhichu">
+          <view class="progress" style="background:#ffda44;width:75%"><view class="num">30</view></view>
+        </view>
+        <view class="chart-shouru">
+          <view class="progress" style="background:#feb127;width:30%"><view class="num">3.5</view></view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 类饼图 -->
+
+  <view class="month-type">
+    <view class="chart" style="width:100%;height:250px;">
+    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
+  </view>
+  <view class="zhichu-rank">支出排行榜</view>
+  </view>
+
+<!-- 折线图 -->
+  <view class="month-type">
+    <view class="chart" style="width:100%;height:250px;">
+    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ecs }}"></ec-canvas>
+  </view>
+  <view class="zhichu-rank">支出排行榜</view>
+  </view>
+
+  <!-- 折线图 -->
+  <view class="month-type">
+    <view class="chart" style="width:100%;height:250px;">
+    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ect }}"></ec-canvas>
+  </view>
+  <view class="zhichu-rank">支出排行榜</view>
+  </view>
+</view>
+

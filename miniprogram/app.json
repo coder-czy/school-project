@@ -1,13 +1,17 @@
 {
   "pages": [
-    "pages/chart/chart",
     "pages/index/index",
+    "pages/monthDetail/monthDetail",
+    "pages/profile/profile",
+    "pages/booking/booking",
+    "pages/auth/auth",
+    "pages/chart/chart",
     "pages/bookingDetail/bookingDetail",
     "pages/history/history",
-    "pages/booking/booking",
-    "pages/profile/profile",
     "pages/shouru/shouru",
-    "pages/zhichu/zhichu"
+    "pages/zhichu/zhichu",
+    "pages/detail/detail",
+    "pages/rule/rule"
   ],
   "window": {
     "backgroundColor": "#ffda44",

@@ -1,0 +1,13 @@
+/* miniprogram/pages/rule/rule.wxss */
+
+
+.content{
+  padding: 20rpx;
+}
+.rule{
+
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #393939;
+}

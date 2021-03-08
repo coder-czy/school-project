@@ -21,6 +21,7 @@ border-radius: 50%;
 background-color: #ddd;
 margin-right: 30rpx;
 border: 4rpx solid #fff;
+overflow: hidden;
 }
 
 .attendance-img{
@@ -160,7 +161,7 @@ font-size: 32rpx;
 .content-right {
   height: 100%;
   width: calc(100% - 300rpx);
-  margin-top: 15rpx;
+  margin-top:40rpx;
   padding-right: 20rpx;
 }
 .surplus-budget,.month-budget{
@@ -176,4 +177,130 @@ font-size: 32rpx;
   color: #444344;
   font-size: 32rpx;
   border-bottom: 1rpx solid #888;
+}
+
+.cover{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.sign-in{
+  position: relative;
+  width: 500rpx;
+  height: 700rpx;
+  border-radius: 16rpx;
+  background-color: #ffda44;
+  overflow: hidden;
+}
+
+.close{
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  right: 20rpx;
+  top: 10rpx;
+}
+
+.line{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+ 
+  width: 40rpx;
+  height: 4rpx;
+  background-color: #353535;
+}
+.line:nth-child(1){
+  transform: rotateZ(45deg);
+}
+.line:nth-child(2){
+  transform: rotateZ(-45deg);
+}
+
+.sign-in-img{
+  position: absolute;
+  top: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180rpx;
+  height: 180rpx;
+  background-color: #eee;
+  border-radius: 50%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.sign-in-content{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 200rpx;
+  background-color: #fff;
+  padding-top: 60rpx;
+}
+
+.content-title{
+  font-size: 36rpx;
+  color: #353535;
+}
+.stage{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 240rpx;
+
+}
+.stage-item{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+
+  flex: 1;
+  height: 100rpx;
+  text-align: center;
+}
+.stage-item:nth-child(2){
+  border-right: 1rpx solid #dfdfdf;
+  border-left: 1rpx solid #dfdfdf;
+  box-sizing: border-box;
+}
+.sign-in-num{
+  font-size: 36rpx;
+  color: #343434;
+}
+.sign-in-text{
+  font-size: 28rpx;
+  color: #868686;
+}
+
+.content-rule{
+  width: 400rpx;
+  height: 100rpx;
+  background-color: #fd6b6b;
+  color: #fff;
+  text-align: center;
+  font-size: 36rpx;
+  line-height: 100rpx;
+  border-radius: 30rpx;
+}
+
+.checkin-text{
+  height: 40rpx;
+  line-height: 40rpx;
+  color:#1d1a1b ;
+  text-align: center;
 }
