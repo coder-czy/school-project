@@ -26,7 +26,7 @@ function initChart(canvas, width, height, dpr) {
   },
   series: [
       {
-          name: '访问来源',
+          name: '金鱼记账',
           type: 'pie',
           radius: ['50%', '90%'],
           avoidLabelOverlap: false,
@@ -313,6 +313,7 @@ Page({
           obj.value = bookingDatas[key].money*1
          bookingDatas[key].money = tool.thousandthPlace(bookingDatas[key].money);
           bookingDatas[key].percent = (bookingDatas[key].data/totalMoney*100).toFixed(2)+'%'
+          bookingDatas[key].progressPercent = Math.floor(bookingDatas[key].data/totalMoney*100)
           bookingDatas[key].ids = bookingDatas[key].ids.join('@');
           // bookingDatas[key].stroke = false
           bData.push(bookingDatas[key]);

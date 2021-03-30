@@ -1,6 +1,7 @@
 // miniprogram/pages/index/index.js
 
 const app =getApp()
+import {tool} from '../../js/tool' 
 Page({
 
   /**
@@ -35,7 +36,10 @@ Page({
     zhichu:'',
 
     // 判断是否有记账数据
-    isHasData:true
+    isHasData:true,
+
+    shouruObj:{},
+    zhichuObj:{},
 
   },
 
@@ -161,13 +165,30 @@ Page({
         allZhichu+=zhichu
 
         arr.push(obj)
+
+      
         
       }
+      // 排序
+      arr.sort((a,b)=>{
+        return a.dateItem.split('日')[0].split('月')[1] - b.dateItem.split('日')[0].split('月')[1]
+      })
+
+
       this.setData({
         bookingData:arr.reverse(),
         shouru:allShouru.toFixed(2),
-        zhichu:allZhichu.toFixed(2)
-      })
+        zhichu:allZhichu.toFixed(2),
+        shouruObj:{
+          shouru1:allShouru.toFixed(2).split('.')[0],
+          shouru2:allShouru.toFixed(2).split('.')[1]
+        },
+        zhichuObj:{
+          zhichu1:allZhichu.toFixed(2).split('.')[0],
+          zhichu2:allZhichu.toFixed(2).split('.')[1]
+        },
+      }) 
+      
       console.log(arr);
     }).catch(error=>{
       wx.hideNavigationBarLoading();

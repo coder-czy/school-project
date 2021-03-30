@@ -20,8 +20,10 @@
 
 
       </view>
-      <view class="fl shouru">{{shouru}}</view>
-      <view class="fl zhichu">{{zhichu}}</view>
+      <view class="fl shouru">{{shouruObj.shouru1}}.<text class="scale-text">{{shouruObj.shouru2}}</text>
+      </view>
+      <view class="fl zhichu">{{zhichuObj.zhichu1}}.<text class="scale-text">{{zhichuObj.zhichu2}}</text>
+      </view>
     </view>
   </view>
 

@@ -22,30 +22,19 @@ Page({
       //查看是否授权
   
       wx.getSetting({
-  
         success: function(res) {
-  
           if (res.authSetting['scope.userInfo']) {
-  
             console.log("用户授权了");
-  
           } else {
-  
             //用户没有授权
-  
             console.log("用户没有授权");
-  
           }
-  
         }
-  
       });
-  
     },
   
   bindGetUserInfo: function(res) {
  
-  
       if (res.detail&&res.detail.userInfo) {
   
         //用户按了允许授权按钮
@@ -59,7 +48,7 @@ Page({
         console.log(res.detail.userInfo);
 
         app.globalData.isAuth = true;
-
+        this.getUserData()
         wx.navigateBack()
   
       } else {
@@ -93,6 +82,49 @@ Page({
       }
   
    },
+
+    // 获取用户信息
+    getUserData(){
+      wx.cloud.callFunction({
+        name:'get_userData'
+      }).then(res=>{
+        console.log('userData==>',res);
+        if(res.result.data.length==0){
+          console.log('用户信息初始化');
+          this.initUserData()
+        }else{
+          return
+        }
+      }).catch(err=>{
+        console.log('err=>',err);
+      })
+    },
+
+
+    // 初始化用户数据
+    initUserData(){
+      let data ={
+      registerDate:  Date.now(),
+      continueBookingDate: 1,
+      checkInTime:Date.now(),
+      totalBookingDate:0,
+      totalBookingTimes:0,
+      budget:100.00,
+      bookedIcon:[],
+      shouruDislikeIcon:[],
+      zhichuDislikeIcon:[]
+      }
+      console.log(data);
+
+      wx.cloud.callFunction({
+        name:'add_userData',
+        data
+      }).then(res=>{
+        console.log('user信息',res);
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
   
   
 

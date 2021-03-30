@@ -1,0 +1,95 @@
+.setting-top{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ background-color: #ffdd4a;
+ padding: 20rpx 100rpx;
+ height: 100rpx;
+ box-sizing: border-box;
+ 
+}
+.booking-type{
+  height: 60rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #383234;
+
+}
+.icon-box{
+  height: calc(100% - 100rpx);
+  overflow: scroll;
+}
+.type-btn{
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 28rpx;
+  color: #383234;
+}
+
+.type-btn.active{
+  background-color: #383234;
+  color: #ffdd4a;
+}
+.icon-item{
+  height: 100rpx;
+  border-top: 1rpx solid #ededed;
+  margin: 0 20rpx;
+  display:  flex;
+  /* justify-content: center; */
+  align-items: center;
+
+}
+
+.reduce-icon{
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  width: 50rpx;
+  background-color: #f33d39;
+  border-radius: 50%;
+  font-size: 28rpx;
+  font-weight: 900;
+  color: #fff;
+  margin-right: 40rpx;
+}
+
+.icon-img{
+  height: 60rpx;
+  width: 60rpx;
+  background-color: #eee;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20rpx;
+
+}
+
+.add-icon{
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  width: 50rpx;
+  background-color: #51d66c;
+  border-radius: 50%;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-right: 40rpx;
+  box-sizing: border-box;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.title{
+ padding:20rpx;
+ font-size: 28rpx;
+ color: #7a7a7a;
+}

@@ -1,5 +1,7 @@
 // miniprogram/pages/profile/profile.js
+import {tool} from '../../js/tool'
 var wxCharts = require('../../js/wxcharts.js')
+
 
 const app = getApp()
 Page({
@@ -33,10 +35,20 @@ Page({
       // 每月渲染数据
       bookingData:'',
   
-      // 总收入和总支出
-      shouru:'',
-      zhichu:'',
-  
+      // 本月总收入和总支出结余
+      shouru:'0.00',
+      zhichu:'0.00',
+      surplus:'0.00',
+
+      // 连续打卡天数、记账总天数、记账总笔数
+      continueBookingDate:0,
+      totalBookingDateCount:0,
+      totalBookingTimes:0,
+
+      // 本月预算
+      budget:'100.00',
+      surplusBudget:'100.00',
+
       // 判断是否有记账数据
       isHasData:true,
 
@@ -44,7 +56,26 @@ Page({
       isShow:false,
 
       // 是否签到
-      isCheckIn:false
+      isCheckIn:false,
+      // 签到时间
+      checkInTime:'',
+
+      // 保存画图参数
+      series:[],
+      title:{},
+
+      shouruObj:{
+        shouru1:'0',
+        shouru2:'00'
+      },
+      zhichuObj:{
+        zhichu1:'0',
+        zhichu2:'00'
+      },
+      surplusObj:{
+        surplus1:'0',
+        surplus2:'00'
+      },
   
   },
 
@@ -62,32 +93,71 @@ Page({
    */
   onShow(){
    this.getUserInfo()
+   this.getUserData()
    this.getdate()
    this.findBookingDataByDate()
-   this.drawPie(
-     [{color:'#ffdd4a',data:80},{color:'#fff',data:20}]
-   )
+   
   },
 
-    // 获取用户信息
+  
+   // 获取用户信息
+   getUserData(){
+     if(!app.globalData.isAuth){
+       return
+     }
+    wx.cloud.callFunction({
+      name:'get_userData'
+    }).then(res=>{
+      console.log('userData==>',res);
+     this.initData(res.result.data[0])
+    }).catch(err=>{
+      console.log('err=>',err);
+    })
+  },
+
+  // 初始化打卡等时间
+  initData(data){
+
+    let time = tool.formatDate(new Date()) 
+    let checkInTime = tool.formatDate(new Date(data.checkInTime))
+    if(time==checkInTime){
+      this.setData({
+        isCheckIn:true
+      })
+    }
+    console.log(time,checkInTime);
+    this.setData({
+      continueBookingDate:data.continueBookingDate,
+      totalBookingDateCount:data.totalBookingDate,
+      totalBookingTimes:data.totalBookingTimes,
+      // 本月预算
+      budget:data.budget.toFixed(2),
+      checkInTime : data.checkInTime
+    })
+
+    this.judgeContinueTime()
+  },
+
+
+    // 获取用户微信头像等信息
     getUserInfo(){
-let isAuth = app.globalData.isAuth;
-console.log(app.globalData);
-console.log('isAuth==>',isAuth)
-if(isAuth){
-        // 需授权才可使用
-        wx.getUserInfo({
-          success:res=>{
-            console.log('res==>',res)
-            this.setData({
-              userInfo:{
-                img:res.userInfo.avatarUrl,
-                nickname: res.userInfo.nickName
+    let isAuth = app.globalData.isAuth;
+    console.log(app.globalData);
+    console.log('isAuth==>',isAuth)
+    if(isAuth){
+            // 需授权才可使用
+            wx.getUserInfo({
+              success:res=>{
+                console.log('res==>',res)
+                this.setData({
+                  userInfo:{
+                    img:res.userInfo.avatarUrl,
+                    nickname: res.userInfo.nickName
+                  }
+                })
               }
             })
-          }
-        })
-  }
+      }
     },
 
   // 用户授权登录
@@ -133,6 +203,11 @@ if(isAuth){
   },
   // 根据月获取数据
   getBookingData(start,end){
+    // 如果未授权则阻止
+    let isAuth = app.globalData.isAuth;
+    if(!isAuth){
+      return
+    }
     wx.showNavigationBarLoading()
     wx.cloud.callFunction({
       name:"get_bookingByMonth",
@@ -213,9 +288,52 @@ if(isAuth){
         bookingData:arr.reverse(),
         shouru:allShouru.toFixed(2),
         zhichu:allZhichu.toFixed(2),
-        surplus:(allShouru-allZhichu).toFixed(2)
+        surplus:(allShouru-allZhichu).toFixed(2),
+        surplusBudget:(this.data.budget - allZhichu).toFixed(2),
+        shouruObj:{
+          shouru1:allShouru.toFixed(2).split('.')[0],
+          shouru2:allShouru.toFixed(2).split('.')[1]
+        },
+        zhichuObj:{
+          zhichu1:allZhichu.toFixed(2).split('.')[0],
+          zhichu2:allZhichu.toFixed(2).split('.')[1]
+        },
+        surplusObj:{
+          surplus1:(allShouru-allZhichu).toFixed(2).split('.')[0],
+          surplus2:(allShouru-allZhichu).toFixed(2).split('.')[1],
+
+        }
       })
       console.log(arr);
+
+      let title = Math.floor((this.data.surplusBudget*1/this.data.budget*1)*100)+'%'
+      let color = ''
+      let sBedget = this.data.surplusBudget*1
+      if(sBedget>=0){
+        color='#666'
+      }else{
+        sBedget = 0
+        title='已超支',
+        color='#e4393c'
+      }
+      console.log(title,color,sBedget);
+      this.drawPie(
+        [{color:'#ffdd4a',data:sBedget},{color:'#f2f2f2',data:this.data.zhichu*1}],
+        {
+            name: title,
+            color: color,
+            fontSize: 16
+          }
+      )
+      this.setData({
+        series: [{color:'#ffdd4a',data:sBedget},{color:'#f2f2f2',data:this.data.zhichu*1}],
+        title: {
+          name: title,
+          color: color,
+          fontSize: 16
+        }
+      })
+
     }).catch(error=>{
       wx.hideNavigationBarLoading();
       console.log('获取数据失败',error);
@@ -320,12 +438,102 @@ if(isAuth){
 
   // 签到
   checkIn(){
+    // console.log(app.globalData.isAuth);
+    if(!app.globalData.isAuth){
+      return
+    }
     if(this.data.isCheckIn){
       return
     }
+
+    // 判断打卡状态
+    let time = tool.formatDate(new Date()) 
+    let ciTime = tool.formatDate(new Date(this.data.checkInTime))
+    let timeDiff = Date.now() - this.data.checkInTime
+    let timeMS = 48*60*60*1000
+    // 更新userData数据
+
+    let sendData = { }
+
+   
+    if(time !== ciTime){
+      
+      // 判断是否连续打卡
+      if(0<timeDiff&&timeDiff<=timeMS){
+        
+        sendData.continueBookingDate=this.data.continueBookingDate+1
+        sendData.checkInTime=Date.now()
+      }else{
+        sendData.continueBookingDate=1
+        sendData.checkInTime=Date.now()
+      }
+    }
+    console.log('sendData==>',sendData);
+    
+    // 调用update方法
+    this.updateUserData(sendData)
+
     this.setData({
       isCheckIn:true,
       isShow:true
+    })
+    wx.cloud.callFunction({
+      name:'get_userData'
+    }).then(res=>{
+      console.log('userData==>',res);
+     let continueBookingDate = res.result.data[0].continueBookingDate
+     console.log('continueBookingDate',continueBookingDate);
+     this.setData({
+      continueBookingDate
+     })
+    }).catch(err=>{
+      console.log('err=>',err);
+    })
+   
+  },
+
+  judgeContinueTime(){
+    if(!app.globalData.isAuth){
+      return
+    }
+
+    // 判断打卡状态
+    let time = tool.formatDate(new Date()) 
+    let ciTime = tool.formatDate(new Date(this.data.checkInTime))
+    let timeDiff = Date.now() - this.data.checkInTime
+    let timeMS = 48*60*60*1000
+    // 更新userData数据
+
+    let sendData = { }
+    if(time !== ciTime){
+      
+      // 判断是否连续打卡
+      if(0<timeDiff&&timeDiff<=timeMS){
+
+      }else{
+        sendData.continueBookingDate=0
+        this.setData({
+          continueBookingDate:0
+        })
+      }
+    }
+    console.log('sendData==>',sendData);
+    
+    // 调用update方法
+    this.updateUserData(sendData)
+  },
+
+  // 更新userData
+  updateUserData(data){
+    let _this = this
+    wx.cloud.callFunction({
+      name:'update_userData',
+      data
+    }).then(res=>{
+      console.log('update==>',res);
+      
+    }).catch(err=>{
+      console.log(err);
     })
   },
 
@@ -344,7 +552,7 @@ if(isAuth){
   },
 
   // 画饼图
-  drawPie:function(series){
+  drawPie:function(series,title){
     if(series.length==0){
       return
     }
@@ -362,12 +570,19 @@ if(isAuth){
       */
      type:'ring',
      extra:{
-      ringWidth:20,
+      ringWidth:15,
       pie:{
         offsetAngle:-90
       },
      
+     
      },
+     title,
+    //  title: {
+    //   name: '100%',
+    //   color: '#333333',
+    //   fontSize: 16
+    // },
       series:series,
       disablePieStroke: true,
       width:140,
@@ -376,5 +591,22 @@ if(isAuth){
       legend:false
     })
   },
+
+  // 跳转预算详情
+  goToBudgetDetail(){
+    let monthData = JSON.stringify(this.data.bookingData)
+    let drawData =JSON.stringify( {
+      surplus:this.data.surplus,
+      budget:this.data.budget,
+      zhichu:this.data.zhichu,
+      surplusBudget:this.data.surplusBudget
+    })
+    let series = JSON.stringify(this.data.series)
+    let title = JSON.stringify(this.data.title)
+ 
+    wx.navigateTo({
+      url: '../budgetDetail/budgetDetail?monthData='+monthData+'&drawData='+drawData+'&series='+series+'&title='+title,
+    })
+  }
   
 })

@@ -1,6 +1,7 @@
 // miniprogram/pages/bookingDetail/bookingDetail.js
 
 import {tool} from '../../js/tool'
+let app = getApp()
 
 Page({
 
@@ -45,6 +46,28 @@ Page({
     })
 
   },
+
+  onShow(){
+    this.getUserData()
+  },
+
+     // 获取用户信息
+     getUserData(){
+      if(!app.globalData.isAuth){
+        return
+      }
+     wx.cloud.callFunction({
+       name:'get_userData'
+     }).then(res=>{
+       console.log('userData==>',res);
+       this.setData({
+        totalBookingTimes:res.result.data[0].totalBookingTimes
+       })
+     }).catch(err=>{
+       console.log('err=>',err);
+     })
+   },
+
   // 编辑记账信息
   edit(e){
     console.log(e);
@@ -79,6 +102,7 @@ Page({
       }
     }).then(res=>{
       console.log(res);
+      this.reduceOne()
       wx.showToast({
         title: '删除成功',
         icon:'success',
@@ -88,6 +112,21 @@ Page({
     }).catch(err=>{
       console.log('删除失败',err);
 
+    })
+  },
+
+  // 减少一条记账记录
+  reduceOne(){
+    let data = {
+      totalBookingTimes:this.data.totalBookingTimes - 1
+    }
+    wx.cloud.callFunction({
+      name:'update_userData',
+      data
+    }).then(res=>{
+      console.log('user信息',res);
+    }).catch(err=>{
+      console.log(err);
     })
   }
 

@@ -20,12 +20,12 @@
               </view>
               <view class="text">{{item.title}}</view>
             </view>
-              <view class="type-item fl">
+              <view class="type-item fl" bindtap="goSetBookingIcon">
                 <view class="img">
                   <image src="cloud://dev-account-0g8ivom75f465c18.6465-dev-account-0g8ivom75f465c18-1304469880/images/setting.png"
                   mode="widthFix" class="auto-img"></image>
                 </view>
-                <view class="text">设置</view>
+                <view class="text" >设置</view>
               </view>
  
            </view>
@@ -42,12 +42,12 @@
               </view>
               <view class="text">{{item.title}}</view>
             </view>
-            <view class="type-item fl">
+            <view class="type-item fl" bindtap="goSetBookingIcon">
               <view class="img">
                 <image src="cloud://dev-account-0g8ivom75f465c18.6465-dev-account-0g8ivom75f465c18-1304469880/images/setting.png"
                 mode="widthFix" class="auto-img"></image>
               </view>
-              <view class="text">设置</view>
+              <view class="text" >设置</view>
             </view>
  
            </view>

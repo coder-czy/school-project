@@ -1,5 +1,5 @@
 // miniprogram/pages/booking/booking.js
-
+import {tool} from '../../js/tool'
 let app = getApp()
 Page({
 
@@ -25,6 +25,8 @@ Page({
     // shouru zhichu 图标数据
     shouru:[],
     zhichu:[],
+    shouruAll:[],
+    zhichuAll:[],
 
     // 记账类型下标
     shouruIconIndex:-1,
@@ -62,8 +64,19 @@ Page({
     iconIndex:-1,
 
     // 编辑状态下的Index
-    index:-1
+    index:-1,
 
+
+    // 签到时间戳
+    continueBookingDate:0,
+    totalBookingDate:0,
+    totalBookingTimes:0,
+    // 本月预算
+    budget:0,
+    checkInTime : 0,
+
+    zhichuDislikeIcon:[],
+    shouruDislikeIcon:[],
 
 
 
@@ -87,26 +100,92 @@ Page({
   },
 
     onShow(){
-    let _this = this
-    if(this.data.isEdit){
+   
 
-      Promise.all([ _this.getBookingIcons('shouru'),_this.getBookingIcons('zhichu'),_this.getEditData()]).then(res=>{
-        _this.changeTab().then(res=>{
-          setTimeout(() => {
-            
-            _this.getIcon()
-          }, 100);
+        
+      let _this = this
+      if(this.data.isEdit){
+  
+        // 解决多个异步函数的问题
+        Promise.all([ _this.getUserData(),_this.getBookingIcons('shouru'),_this.getBookingIcons('zhichu'),_this.getEditData()]).then(res=>{
+          _this.disposeIcon()
+         
+          _this.changeTab().then(res=>{
+            setTimeout(() => {
+              
+              _this.getIcon()
+             
+            }, 100);
+          })
         })
-      })
-    }else{
-      _this.getBookingIcons('shouru')
-      _this.getBookingIcons('zhichu')
-    }
+      }else{
+        Promise.all([ _this.getUserData(),_this.getBookingIcons('shouru'),_this.getBookingIcons('zhichu')]).then(res=>{
+          _this.disposeIcon()
+         
+        })
+
+      }
+     
+
    
    
   
     this.getNowDate()
+  
   },
+
+  // 图标预处理
+    disposeIcon(){
+      console.log('app.globalData.isAuth',app.globalData.isAuth);
+       if(!app.globalData.isAuth){
+         return
+       }
+      let _this = this
+      let shouru_arr = _this.data.shouru
+      let zhichu_arr = _this.data.zhichu
+
+      zhichu_arr = zhichu_arr.filter((x) => !_this.data.zhichuDislikeIcon.some((item) => x.type == item.type));
+
+      shouru_arr = shouru_arr.filter((x) => !_this.data.shouruDislikeIcon.some((item) => x.type == item.type));
+      this.setData({
+        shouru:shouru_arr,
+        zhichu:zhichu_arr,
+      })
+     
+    },
+
+     // 获取用户信息
+     getUserData(){
+
+      new Promise((resolve,reject)=>{
+
+        console.log('app.globalData.isAuth',app.globalData.isAuth);
+       if(!app.globalData.isAuth){
+         return
+       }
+      wx.cloud.callFunction({
+        name:'get_userData'
+      }).then(res=>{
+        console.log('userData==>',res);
+       let data = res.result.data[0]
+       this.setData({
+         continueBookingDate:data.continueBookingDate,
+         totalBookingDate:data.totalBookingDate,
+         totalBookingTimes:data.totalBookingTimes,
+         // 本月预算
+         budget:data.budget,
+         checkInTime : data.checkInTime,
+         zhichuDislikeIcon:data.zhichuDislikeIcon,
+         shouruDislikeIcon:data.shouruDislikeIcon,
+         bookedIcon:data.bookedIcon,
+       })
+       resolve()
+      }).catch(err=>{
+        console.log('err=>',err);
+      })
+      })
+   },
+
   // 切换tab
   changeTab(e){
     return new Promise((resolve,reject)=>{
@@ -136,7 +215,9 @@ Page({
           }
         }).then(res=>{
           wx.hideNavigationBarLoading();
+      
          this.setData({
+           [type+'All']:res.result.data,
            [type]:res.result.data
          })
 
@@ -496,6 +577,7 @@ Page({
      if(num==0||num=='0.00'||num==''){
        wx.showToast({
          title: '请填写记账数值',
+         icon:'none'
        })
        return
      }
@@ -513,6 +595,43 @@ Page({
         typeIcons = this.data.zhichu[this.data.zhichuIconIndex]
       }
 
+      // 判断打卡状态
+      let time = tool.formatDate(new Date()) 
+      let ciTime = tool.formatDate(new Date(this.data.checkInTime))
+      let timeDiff = Date.now() - this.data.checkInTime
+      let timeMS = 48*60*60*1000
+      // 更新userData数据
+      this.setData({
+        totalBookingTimes:this.data.totalBookingTimes+1
+      })
+      let sendData = {
+        totalBookingTimes:this.data.totalBookingTimes,
+      }
+      // 第一次记账
+      if(this.data.totalBookingDate==0){
+        sendData.totalBookingDate = 1
+      }
+     
+      if(time !== ciTime){
+        sendData.totalBookingDate = this.data.totalBookingDate+1
+        
+        // 判断是否连续打卡
+        if(0<timeDiff&&timeDiff<=timeMS){
+          
+          sendData.continueBookingDate=this.data.continueBookingDate+1
+          sendData.checkInTime=Date.now()
+        }else{
+          sendData.continueBookingDate=1
+          sendData.checkInTime=Date.now()
+        }
+      }
+      console.log('sendData==>',sendData);
+      
+      // 调用update方法
+      this.updateUserData(sendData)
+      
+      
+
     let data = {
       comment:this.data.comment,
       date,
@@ -529,15 +648,13 @@ Page({
     }
 
     // 调用add_bookingData云函数
-    wx.showLoading({
-      title: '加载中...'
-    })
+
 
     wx.cloud.callFunction({
       name:'add_bookingData',
       data
     }).then(res=>{
-      wx.hideLoading()
+     
     
       this.setData({
         comment:'',
@@ -549,9 +666,13 @@ Page({
       })
       wx.showToast({
         title: '记账成功',
-        duration:2000,
-        icon:'success'
+        icon:'none'
       })
+      let bookedIcon = this.data.bookedIcon
+      if(bookedIcon.some(item=>typeIcons.type != item.type)){
+        bookedIcon.push(typeIcons)
+      }
+      this.updateUserData({bookedIcon})
       console.log(res);
     }).catch(err=>{
       wx.hideLoading()
@@ -559,6 +680,20 @@ Page({
     })
     // console.log(data);       
    }
+  },
+
+
+
+  // 更新用户信息
+  updateUserData(data){
+    wx.cloud.callFunction({
+      name:'update_userData',
+      data
+    }).then(res=>{
+      console.log(res);
+    }).catch(err=>{
+      console.log(err);
+    })
   },
 
   // 当为编辑模式时，调用此方法
@@ -626,6 +761,28 @@ Page({
     })
 
     
+  },
+
+  // 跳转修改记账图标页面
+  goSetBookingIcon(){
+    if(!app.globalData.isAuth){
+      wx.navigateTo({
+        url: '../auth/auth',
+      })
+    }
+    let type = ''
+    if(this.data.currentIndex==0){
+      type = 'zhichu'
+    }else{
+      type= 'shouru'
+    }
+    type = JSON.stringify(type)
+    let zhichu = JSON.stringify(this.data.zhichuAll)
+    let shouru = JSON.stringify(this.data.shouruAll)
+
+    wx.navigateTo({
+      url: '../setBookingIcon/setBookingIcon?type='+type+'&zhichu='+zhichu+'&shouru='+shouru,
+    })
   },
 
   

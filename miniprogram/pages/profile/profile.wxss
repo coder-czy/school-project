@@ -51,12 +51,11 @@ height: 40rpx;
   width: 100%;
 }
 .profile-bottom{
-padding: 0 20rpx;
 margin: 20rpx 0;
 }
 
 .profile-item{
-  width: calc(100% / 3 - 40rpx / 3);
+  width: calc(100% / 3);
   text-align: center;
 
 }
@@ -157,6 +156,9 @@ font-size: 32rpx;
 .budget-box{
   padding-right:10rpx ;
 }
+.pie{
+  margin-left: -20rpx;
+}
 
 .content-right {
   height: 100%;
@@ -188,8 +190,8 @@ font-size: 32rpx;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 99999;
 }
 
 .sign-in{

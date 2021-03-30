@@ -1,5 +1,7 @@
 // miniprogram/pages/history/history.js
 
+const { tool } = require("../../js/tool")
+
 const app =getApp()
 Page({
 
@@ -39,7 +41,12 @@ Page({
 
   // 获取当前时间
   getTime(){
-    let time = new Date().getFullYear()
+    let time 
+    if(app.globalData.selectYear){
+      time = app.globalData.selectYear
+    }else{
+      time = new Date().getFullYear()
+    }
     this.setData({
       year:time
     })
@@ -51,6 +58,7 @@ Page({
     this.setData({
       year:e.detail.value
     })
+    app.globalData.selectYear = e.detail.value
     this.getYearData()
     
   },
@@ -144,9 +152,9 @@ Page({
 
     
     this.setData({
-      shouru:allShouru.toFixed(2),
-      zhichu:allZhichu.toFixed(2),
-      surplus:(allShouru-allZhichu).toFixed(2),
+      shouru:tool.thousandthPlace(allShouru.toFixed(2)),
+      zhichu:tool.thousandthPlace(allZhichu.toFixed(2)),
+      surplus:tool.thousandthPlace((allShouru-allZhichu).toFixed(2)),
       bookingData:allData
     })
     console.log(this.data.bookingData,allData);
@@ -162,9 +170,12 @@ Page({
     })
   },
 
-  goMonthDetail(){
+  goMonthDetail(e){
+    console.log(e);
+    let data = JSON.stringify(e.currentTarget.dataset.booking)
+    let allData = JSON.stringify(this.data.bookingData)
     wx.navigateTo({
-      url: '../monthDetail/monthDetail',
+      url: '../monthDetail/monthDetail?data='+data+'&allData='+allData,
     })
   }
 

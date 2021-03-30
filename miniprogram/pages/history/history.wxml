@@ -8,7 +8,7 @@
   <view class="bill-bg">
     <view class="year">
           <!-- 时间选择器 -->
-          <picker mode="date" value="{{time}}" fields="year" start="1990-01-01" end="2100-01-01" bindchange="bindTimeChange">
+          <picker mode="date" value="{{time}}" fields="year" start="'1990-01-01'" end="'2021-01-01'" bindchange="bindTimeChange">
                {{year}}年 <view class="triangle"></view>
             </picker>
             <view class="main-text">结余</view>
@@ -29,7 +29,7 @@
 
   <!-- 12个月份的具体数据 -->
   <view class="bill-content">
-    <view class="month-list clearfix">
+    <view class="month-list list-title clearfix">
       <view class="month fl">月份</view>
       <view class="list-item fl">收入</view>
       <view class="list-item fl">支出</view>
@@ -39,7 +39,7 @@
     
     </view>
     <view>
-      <view class="month-list list clearfix" wx:for="{{bookingData}}" wx:key="index" bindtap="goMonthDetail">
+      <view class="month-list list clearfix" wx:for="{{bookingData}}" wx:key="index" bindtap="goMonthDetail" data-booking="{{item}}">
         <view class="month fl">{{item.month}}月</view>
         <view class="list-item fl">{{item.shouru}}</view>
         <view class="list-item fl">{{item.zhichu}}</view>

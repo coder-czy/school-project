@@ -16,6 +16,11 @@ class Tool{
   }
 
   thousandthPlace(value){
+    let flag = false
+    if(value<0){
+     value= value*-1
+     flag = true
+    }
     var v = value.toString().split('.');
     var valueInt = v[0]
 
@@ -29,7 +34,12 @@ class Tool{
     if(v[1]){
      v2+= '.'+v[1]
     }
-    return v2;
+    if(flag){
+      return '-'+ v2
+    }else{
+      return v2;
+
+    }
   }
 
 

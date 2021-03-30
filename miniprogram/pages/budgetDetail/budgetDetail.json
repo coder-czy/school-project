@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "预算",
+  "usingComponents": {
+    "ec-canvas": "../../ec-canvas/ec-canvas"
+  }
+}

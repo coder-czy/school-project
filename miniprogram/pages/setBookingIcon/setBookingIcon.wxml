@@ -1,0 +1,31 @@
+<!--miniprogram/pages/setBookingIcon/setBookingIcon.wxml-->
+<view class="setting-top">
+  <view class="booking-type">
+    <view class="type-btn {{type=='zhichu' ? 'active' : ''}}" bindtap="changeType" data-type="zhichu">支出</view>
+    <view class="type-btn {{type=='shouru' ? 'active' : ''}}"  bindtap="changeType" data-type="shouru">收入</view>
+  </view>
+</view>
+<view class="icon-box">
+  <view class="icon-item" wx:for="{{type=='zhichu' ? zhichu : shouru}}" wx:key="index" >
+  <view class="reduce-icon" bindtap="reduceIcon" data-icon="{{item}}">一</view>
+  <view class="icon-img">
+    <image src="{{item.icon}}" mode="widthFix" class="auto-img"></image>
+  </view>
+  <view class="icon-title">{{item.title}}</view>
+</view>
+
+
+<view class="title">更多类别</view>
+
+<view class="icon-item"  wx:for="{{type =='zhichu' ? zhichuDislikeIcon : shouruDislikeIcon}}" wx:key="index" >
+  <view class="add-icon" bindtap="addIcon" data-icon="{{item}}">+</view>
+  <view class="icon-img">
+    <image src="{{item.icon}}" mode="widthFix" class="auto-img"></image>
+  </view>
+  <view class="icon-title">{{item.title}}</view>
+</view>
+
+</view>
+
+
+

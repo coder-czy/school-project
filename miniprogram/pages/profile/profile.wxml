@@ -29,15 +29,15 @@
 
     <view class="profile-bottom clearfix">
       <view class="profile-item fl">
-        <view class="item-num">0</view>
+        <view class="item-num">{{continueBookingDate}}</view>
         <view class="item-text">以连续打卡</view>
       </view>
       <view class="profile-item fl">
-        <view class="item-num">1</view>
+        <view class="item-num">{{totalBookingDateCount}}</view>
         <view class="item-text">记账总天数</view>
       </view>
       <view class="profile-item fl">
-        <view class="item-num">2</view>
+        <view class="item-num">{{totalBookingTimes}}</view>
         <view class="item-text">记账总笔数</view>
       </view>
     </view>
@@ -58,15 +58,15 @@
         <view class="fr right clearfix">
           <view class="fl content-item">
             <view class="item-title">收入</view>
-            <view class="item-num">{{shouru||'0.00'}}</view>
+            <view class="item-num">{{shouruObj.shouru1}}.<text class="scale-text">{{shouruObj.shouru2}}</text></view>
           </view>
           <view class="fl content-item">
             <view class="item-title">支出</view>
-            <view class="item-num">{{zhichu||'0.00'}}</view>
+            <view class="item-num">{{zhichuObj.zhichu1}}.<text class="scale-text">{{zhichuObj.zhichu2}}</text></view>
           </view>
           <view class="fl content-item">
             <view class="item-title">结余</view>
-            <view class="item-num">{{surplus||'0.00'}}</view>
+            <view class="item-num">{{surplusObj.surplus1}}.<text class="scale-text">{{surplusObj.surplus2}}</text></view>
           </view>
         </view>
       </view>
@@ -74,7 +74,7 @@
     </view>
     
     <!-- 预算 -->
-    <view class="budget">
+    <view class="budget" bindtap="goToBudgetDetail">
       <view class="budget-box clearfix">
         <view class="fl budget-title">{{month}}月总预算</view>
        <view class="fr clearfix">
@@ -95,15 +95,15 @@
         <view class="content-right fr">
           <view class="surplus-budget clearfix">
             <view class="surplus-title fl">剩余预算:</view>
-            <view class="surplus-num fr">100.00</view>
+            <view class="surplus-num fr">{{surplusBudget}}</view>
           </view>
           <view class="month-budget clearfix">
             <view class="surplus-title fl">本月预算:</view>
-            <view class="surplus-title fr">100.00</view>
+            <view class="surplus-title fr">{{budget}}</view>
           </view>
           <view class="month-budget clearfix">
             <view class="surplus-title fl">本月支出:</view>
-            <view class="surplus-title fr">{{zhichu||'0.00'}}</view>
+            <view class="surplus-title fr">{{zhichu}}</view>
           </view>
         </view>
       </view>
@@ -114,36 +114,36 @@
 
 <!-- 签到弹窗 -->
 
-<view class="cover" wx:if="{{isShow}}" bindtap="close">
-  <view class="sign-in">
-    <view class="close" catchtap="close">
-      <view class="line"></view>
-      <view class="line"></view>
-    </view>
+<cover-view class="cover" wx:if="{{isShow}}" bindtap="close">
+  <cover-view class="sign-in">
+    <cover-view class="close" catchtap="close">
+      <cover-view class="line"></cover-view>
+      <cover-view class="line"></cover-view>
+    </cover-view>
 
-    <view class="sign-in-img">
-      <image src="../../images/checkIn.gif" class="auto-img" mode="widthFix"></image>
-    </view>
+    <cover-view class="sign-in-img">
+      <cover-image src="../../images/checkIn.gif" class="auto-img" mode="widthFix"></cover-image>
+    </cover-view>
 
-    <view class="sign-in-content">
-      <view class="content-title">打卡成功</view>
-      <view class="stage">
-        <view class="stage-item">
-        <view class="sign-in-num">1</view>
-        <view class="sign-in-text">已连续打卡</view>
-      </view>
-      <view class="stage-item">
-        <view class="sign-in-num">71</view>
-        <view class="sign-in-text">记账总天数</view>
-      </view>
-      <view class="stage-item">
-        <view class="sign-in-num">8</view>
-        <view class="sign-in-text">记账总笔数</view>
-      </view>
-      </view>
-      <view class="content-rule" catchtap="goRule">
+    <cover-view class="sign-in-content">
+      <cover-view class="content-title">打卡成功</cover-view>
+      <cover-view class="stage">
+        <cover-view class="stage-item">
+        <cover-view class="sign-in-num">{{continueBookingDate}}</cover-view>
+        <cover-view class="sign-in-text">已连续打卡</cover-view>
+      </cover-view>
+      <cover-view class="stage-item">
+        <cover-view class="sign-in-num">{{totalBookingDateCount}}</cover-view>
+        <cover-view class="sign-in-text">记账总天数</cover-view>
+      </cover-view>
+      <cover-view class="stage-item">
+        <cover-view class="sign-in-num">{{totalBookingTimes}}</cover-view>
+        <cover-view class="sign-in-text">记账总笔数</cover-view>
+      </cover-view>
+      </cover-view>
+      <cover-view class="content-rule" catchtap="goRule">
         打卡规则
-      </view>
-    </view>
-  </view>
-</view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</cover-view>
