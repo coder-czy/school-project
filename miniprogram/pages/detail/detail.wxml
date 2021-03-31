@@ -7,12 +7,12 @@
           </view>
           <view class="fl list-info">
             <view class="list-item-describe fl">
-              <view class="top-text {{item.comment =='' ? 'not-comment' : ''}}">
-                <text class="type fl">{{item.typeIcons.title}}</text>
+              <view class="top-text ">
+                <text class="type fl">{{item.comment || item.typeIcons.title}}</text>
                 <text class="fl account">{{item.account}}</text>
-                <text class="date fl">{{item.date}}</text>
+                <!-- <text class="date fl">{{item.date}}</text> -->
               </view>
-              <view class="comment">{{item.comment}}</view>
+              <view class="comment">{{item.date}}</view>
             </view>
             <view class="list-item-money fr ">
             <view class="fl ">{{item.titles.type=='shouru' ? '+'+item.money :'-'+item.money }}</view>

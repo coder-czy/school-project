@@ -18,7 +18,7 @@ class Tool{
   thousandthPlace(value){
     let flag = false
     if(value<0){
-     value= value*-1
+     value= (value*-1).toFixed(2)
      flag = true
     }
     var v = value.toString().split('.');

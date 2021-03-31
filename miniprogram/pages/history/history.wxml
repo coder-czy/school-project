@@ -14,14 +14,14 @@
             <view class="main-text">结余</view>
     </view>
     <!-- <view class="surplus-text">结余</view> -->
-    <view class="surplus">{{surplus}}</view>
+    <view class="surplus">{{surplusObj.surplus1}}.<text class="scale-text2">{{surplusObj.surplus2}}</text></view>
     <view class="classify clearfix">
       <view class="shouru fl">
-        <view class="text">收入 <text class="num">{{shouru}}</text></view>
+        <view class="text">收入 <text class="num">{{shouruObj.shouru1}}.<text class="scale-text">{{shouruObj.shouru2}}</text></text></view>
       
       </view>
       <view class="zhichu fl">
-        <view class="text">支出 <text class="num">{{zhichu}}</text></view>
+        <view class="text">支出 <text class="num">{{shouruObj.shouru1}}.<text class="scale-text">{{shouruObj.shouru2}}</text></text></view>
       
       </view>
     </view>

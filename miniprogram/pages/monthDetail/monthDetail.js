@@ -363,6 +363,7 @@ Page({
     let typeData = []
     let topMoney =0
     data = data.filter(val=>{
+      val.date1 = tool.formatDate2(val.date)
       return val.titles.type == 'zhichu'
     }).sort((a,b)=>{
       return b.money-a.money

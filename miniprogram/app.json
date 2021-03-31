@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/chart/chart",
     "pages/history/history",
     "pages/profile/profile",
     "pages/index/index",
-    "pages/chart/chart",
     "pages/booking/booking",
     "pages/setBookingIcon/setBookingIcon",
     "pages/budgetDetail/budgetDetail",

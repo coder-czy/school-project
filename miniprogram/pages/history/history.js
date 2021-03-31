@@ -22,7 +22,20 @@ Page({
 
     // 总收入，总支出
     shouru:0.00,
-    zhichu:0.00
+    zhichu:0.00,
+
+    shouruObj:{
+      shouru1:'0',
+      shouru2:'00'
+    },
+    zhichuObj:{
+      zhichu1:'0',
+      zhichu2:'00'
+    },
+    surplusObj:{
+      surplus1:'0',
+      surplus2:'00'
+    },
   },
 
 
@@ -155,7 +168,20 @@ Page({
       shouru:tool.thousandthPlace(allShouru.toFixed(2)),
       zhichu:tool.thousandthPlace(allZhichu.toFixed(2)),
       surplus:tool.thousandthPlace((allShouru-allZhichu).toFixed(2)),
-      bookingData:allData
+      bookingData:allData,
+      shouruObj:{
+        shouru1:allShouru.toFixed(2).split('.')[0],
+        shouru2:allShouru.toFixed(2).split('.')[1]
+      },
+      zhichuObj:{
+        zhichu1:allZhichu.toFixed(2).split('.')[0],
+        zhichu2:allZhichu.toFixed(2).split('.')[1]
+      },
+      surplusObj:{
+        surplus1:(allShouru-allZhichu).toFixed(2).split('.')[0],
+        surplus2:(allShouru-allZhichu).toFixed(2).split('.')[1],
+
+      }
     })
     console.log(this.data.bookingData,allData);
 

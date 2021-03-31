@@ -30,11 +30,15 @@ clear: both;
   border-top: 20rpx solid #000;
 }
 
+
 .scale-text{
   display: inline-block;
   font-size: 24rpx;
 }
-
+.scale-text2{
+  display: inline-block;
+  font-size: 36rpx;
+}
 ::-webkit-scrollbar{
   display: none;
   width: 0;

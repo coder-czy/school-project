@@ -57,7 +57,7 @@
                 <text class="type fl">{{item.comment || item.typeIcons.title}}</text>
        
               </view>
-              <view class="comment">{{item.date}}</view>
+              <view class="comment">{{item.date1}}</view>
             </view>
             <view class="list-item-money fr ">
             <view class="fl ">{{'-'+item.money}}</view>
@@ -97,7 +97,7 @@
   <view class="zhichu-rank">{{bookingData.month}}月支出前三的类别</view>
 
   <view class="list" >
-        <view class="list-item clearfix" wx:for="{{typeData}}" wx:key="index" data-id="{{item._id}}" bindtap="goDetail">
+        <view class="list-item clearfix" wx:for="{{typeData}}" wx:key="index">
           <view class="fl list-item-rank">{{index+1}}</view>
           <view class="fl list-item-img">
             <image class="auto-img list-icon" src="{{item.typeIcons.icon}}" mode="widthFix"></image>

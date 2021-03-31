@@ -38,7 +38,7 @@
   },
   "appid": "wx49fceb1611292178",
   "projectname": "goldfish-account",
-  "libVersion": "2.16.0",
+  "libVersion": "2.8.1",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
