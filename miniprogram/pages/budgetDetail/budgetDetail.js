@@ -58,6 +58,7 @@ let option = {
   //     }
   // },
   radar: {
+    radius:'60%',
       indicator: [
           {name: 'AQI', },
           {name: 'PM2.5', },
