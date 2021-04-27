@@ -12,7 +12,8 @@ Page({
     randerIcon:[],
     zhichuDislikeIcon:[],
     shouruDislikeIcon:[],
-    bookedIcon:[]
+    bookedIcon:[],
+    isShow:false
     
   },
 
@@ -77,8 +78,9 @@ Page({
     this.setData({
       shouru:shouru_arr,
       zhichu:zhichu_arr,
+      isShow:true
     })
-    console.log(this.data.shouru,this.data.zhichu);
+    // console.log(this.data.shouru,this.data.zhichu);
    
   },
   reduceIcon(e){

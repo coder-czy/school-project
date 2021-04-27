@@ -578,17 +578,15 @@ Page({
         console.log('isAuth==>',isAuth)
         if(isAuth){
                 // 需授权才可使用
-                wx.getUserInfo({
-                  success:res=>{
-                    console.log('res==>',res)
+              
+                    let res = app.globalData
                     this.setData({
                       userInfo:{
                         img:res.userInfo.avatarUrl,
                         nickname: res.userInfo.nickName
                       }
                     })
-                  }
-                })
+              
           }
             },
       

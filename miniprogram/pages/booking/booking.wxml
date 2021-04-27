@@ -12,7 +12,7 @@
       <!-- 支出类型图标 -->
         <swiper-item class="swiper-item">
           <view class="booking-type clearfix  {{ showKeyboard ? 'active' : ''}}">
-            <view class="type-item fl {{zhichuIconIndex===index ? 'active-icon' : ''}}" wx:for="{{zhichu}}" wx:key="index"
+            <view class="type-item fl {{zhichuIconIndex===index ? 'active-icon' : ''}}" wx:for="{{showZhichu}}" wx:key="index"
              data-index="{{index}}" catchtap="changeIcon">
               <view class="img">
                 <image src="{{item.icon}}"
@@ -34,7 +34,7 @@
         <!-- 收入类型图标 -->
         <swiper-item>
           <view class="booking-type clearfix">
-            <view class="type-item fl  {{shouruIconIndex===index ? 'active-icon' : ''}}" wx:for="{{shouru}}" wx:key="index" 
+            <view class="type-item fl  {{shouruIconIndex===index ? 'active-icon' : ''}}" wx:for="{{showShouru}}" wx:key="index" 
             data-index="{{index}}"  bindtap="changeIcon">
               <view class="img">
                 <image src="{{item.icon}}"

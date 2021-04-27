@@ -36,6 +36,7 @@
       
     </view>
     <view class="chart {{isHasData ? '' : 'hide'}}" style="width:100%;height:350px;">
+      <view class="chart-title">预算支出明细</view>
       <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
     </view>
 
@@ -45,14 +46,20 @@
             <cover-view class="edit-title">每月总预算</cover-view>
             <cover-view class='cover-input' bindtap='tapInput'>
             <cover-view class='text' wx:if="{{showInput}}">{{inputInfo}}</cover-view>
-            <input type="digit" bindinput="getInputVal" value="{{newBudget}}" placeholder="请输入预算金额" auto-focus placeholder-style="color:#e4e4e4;text-align: center;font-size:16px;" focus='{{inputFocus}}' bindblur='blurInput'> 
+            <input type="digit" bindinput="getInputVal" value="{{newBudget}}" placeholder="请输入预算金额" auto-focus placeholder-style="color:#888;text-align: center;font-size:16px;" focus='{{inputFocus}}' bindblur='blurInput'> 
         </input>
             </cover-view>
           </cover-view>
 
           <cover-view class="edit-bottom">
-            <cover-view class="edit-btn cancle" catchtap="cancle"> 取消</cover-view>
-            <cover-view class="edit-btn" catchtap="comfirm">确定</cover-view>
+            <cover-view class="edit-btn cancle" catchtap="cancle">
+              <cover-view class="line-r"></cover-view>
+               取消
+            </cover-view>
+            <cover-view class="edit-btn" catchtap="comfirm">
+              <cover-view class="line-l"></cover-view>
+              确定
+            </cover-view>
           </cover-view>
 
         </cover-view>

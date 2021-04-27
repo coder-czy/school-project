@@ -77,6 +77,9 @@ Page({
   },
 
   getYearData(){
+    if(!app.globalData.isAuth){
+      return
+    }
     let selectYear = this.data.year
     this.getBookingData(selectYear+'-01-01',selectYear+'-12-31')
   },

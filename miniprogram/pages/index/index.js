@@ -18,6 +18,8 @@ Page({
     month:'',
 
     // 时间选择器的结束时间
+    setEnd:'',
+
     end:'',
 
     date:'',
@@ -38,8 +40,16 @@ Page({
     // 判断是否有记账数据
     isHasData:true,
 
-    shouruObj:{},
-    zhichuObj:{},
+    shouruObj:{
+      shouru1:'0',
+      shouru2:'00'
+    },
+    zhichuObj:{
+      zhichu1:'0',
+      zhichu2:'00'
+    },
+
+    isAuth:false
 
   },
 
@@ -53,8 +63,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getdate()
+    wx.getStorage({
+      key: 'userInfo',
+    }).then(res=>{
+     this.setData({
+       isAuth:true
+     })
     this.findBookingDataByDate()
+     
+    }).catch(err=>{
+      console.log(err);
+      this.setData({
+        isAuth:false
+      })
+     
+    })
+    this.getdate()
     // console.log(this.getWeek(5));
   },
 
@@ -66,6 +90,11 @@ Page({
       month:e.detail.value.split('-')[1],
       date:e.detail.value
     })
+    app.globalData.date = {
+      year: e.detail.value.split('-')[0],
+      month:e.detail.value.split('-')[1],
+      date:e.detail.value
+    }
     this.findBookingDataByDate()
     // console.log(this.data.month,this.data.year,this.data.end);
     
@@ -75,15 +104,25 @@ Page({
   getdate(){
     let date = new Date()
     let month = date.getMonth()+1
+    let year = date.getFullYear()
+   
     month=month<10?'0'+month : month
     let day = date.getDate()
     day=day<10?'0'+day : day
     let time = `${date.getFullYear()}-${month}-${day}`
+    let endDate = `${date.getFullYear()}-${month}-${day}`
+    if(app.globalData.date&&app.globalData.date.month!=month){
+      time =app.globalData.date.date
+      month = app.globalData.date.month
+      year = app.globalData.date.year
+
+    }
     this.setData({
      end:time,
      date:time,
-     year:date.getFullYear(),
-     month
+     year,
+     month,
+     setEnd:endDate
       
     })
     console.log(month,this.data.year,this.data.end);
@@ -198,7 +237,17 @@ Page({
 
   // 判断选中的时间
   findBookingDataByDate: function () {
+    // console.log('app.globalData.isAuth',app.globalData.isAuth);
 
+    if(!this.data.isAuth){
+      // wx.showToast({
+      //   title: '111',
+      // })
+      this.setData({
+        isHasData:false
+      })
+      return
+    }
    
     var start = '';
     var end = '';

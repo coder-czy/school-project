@@ -24,25 +24,39 @@ function initChart(canvas, width, height, dpr) {
       top: '5%',
       left: 'center'
   },
+//   legend: {
+//     orient: 'vertical',
+//     right: '3%',
+  
+// },
   series: [
       {
           name: '金鱼记账',
           type: 'pie',
-          radius: ['50%', '90%'],
+          // radius: ['50%', '90%'],
+          radius: '80%',
           avoidLabelOverlap: false,
           top: '20%',
+          // left:'-15%',
          
           label: {
               show: false,
               position: 'center'
           },
+          // emphasis: {
+          //     label: {
+          //         show: false,
+          //         fontSize: '20',
+          //         fontWeight: 'bold'
+          //     }
+          // },
           emphasis: {
-              label: {
-                  show: true,
-                  fontSize: '20',
-                  fontWeight: 'bold'
-              }
-          },
+            itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        },
           labelLine: {
               show: false
           },
@@ -148,7 +162,7 @@ Page({
 
   findBookingDataByDate: function () {
 
-   
+
    let titles={
       type:this.data.payType== 'shouru' ? 'shouru' : 'zhichu',
       title: this.data.payType== 'shouru' ? '收入' : '支出'
@@ -259,7 +273,7 @@ Page({
         console.log('res ==> ', res);
 
         let bookingDatas = {};
-        if(res.result.data.length>0){
+        if(res.result.data.length>0&&app.globalData.isAuth){
          this.setData({
            isHasData:true
          })
@@ -348,7 +362,8 @@ Page({
             title:'支出'
           })
         }
-        // console.log('chartData==>',chartData);
+        console.log('chartData==>',chartData);
+        // chartData.push({value:0.01,name:'',itemStyle:{color:'#f7f7f7'}})
         chart.setOption({
          series:[{
            data:chartData //全局变量

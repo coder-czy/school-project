@@ -27,6 +27,8 @@ Page({
     zhichu:[],
     shouruAll:[],
     zhichuAll:[],
+    showZhichu:[],
+    showShouru:[],
 
     // 记账类型下标
     shouruIconIndex:-1,
@@ -108,14 +110,16 @@ Page({
   
         // 解决多个异步函数的问题
         Promise.all([ _this.getUserData(),_this.getBookingIcons('shouru'),_this.getBookingIcons('zhichu'),_this.getEditData()]).then(res=>{
-          _this.disposeIcon()
+         
          
           _this.changeTab().then(res=>{
             setTimeout(() => {
-              
-              _this.getIcon()
+              _this.disposeIcon().then(res=>{
+
+                _this.getIcon()
+              })
              
-            }, 100);
+            }, 500);
           })
         })
       }else{
@@ -136,20 +140,36 @@ Page({
 
   // 图标预处理
     disposeIcon(){
-      console.log('app.globalData.isAuth',app.globalData.isAuth);
-       if(!app.globalData.isAuth){
-         return
-       }
-      let _this = this
-      let shouru_arr = _this.data.shouru
-      let zhichu_arr = _this.data.zhichu
+      return new Promise((resolve,reject)=>{
 
-      zhichu_arr = zhichu_arr.filter((x) => !_this.data.zhichuDislikeIcon.some((item) => x.type == item.type));
-
-      shouru_arr = shouru_arr.filter((x) => !_this.data.shouruDislikeIcon.some((item) => x.type == item.type));
-      this.setData({
-        shouru:shouru_arr,
-        zhichu:zhichu_arr,
+        console.log('app.globalData.isAuth',app.globalData.isAuth);
+         if(!app.globalData.isAuth){
+          this.setData({
+            showShouru:this.data.shouru,
+            showZhichu:this.data.zhichu
+          })
+           return
+         }
+        let _this = this
+        let shouru_arr = _this.data.shouru
+        let zhichu_arr = _this.data.zhichu
+  
+        zhichu_arr = zhichu_arr.filter((x) => !_this.data.zhichuDislikeIcon.some((item) => x.type == item.type));
+  
+        shouru_arr = shouru_arr.filter((x) => !_this.data.shouruDislikeIcon.some((item) => x.type == item.type));
+        // this.setData({
+        //   shouru:shouru_arr,
+        //   zhichu:zhichu_arr,
+        // })
+        // if(!app.globalData.isAuth || (this.data.zhichuDislikeIcon.length<=0&&this.data.shouruDislikeIcon.length<=0)){
+         
+        // }else{
+          this.setData({
+            showShouru:shouru_arr,
+            showZhichu:zhichu_arr
+          })
+        // }
+       resolve()
       })
      
     },
@@ -168,6 +188,7 @@ Page({
       }).then(res=>{
         console.log('userData==>',res);
        let data = res.result.data[0]
+       
        this.setData({
          continueBookingDate:data.continueBookingDate,
          totalBookingDate:data.totalBookingDate,
@@ -189,7 +210,7 @@ Page({
   // 切换tab
   changeTab(e){
     return new Promise((resolve,reject)=>{
-
+      console.log('change');
     let index = e? e.target.dataset.index : this.data.index
     this.setData({
       currentIndex:index,
@@ -307,10 +328,20 @@ Page({
       let index =-1
       let title=  this.data.bookingData.titles.type
       console.log(title);
-      for(let i=0;i<this.data[title].length;i++){
-        if(this.data[title][i]._id==this.data.bookingData.typeIcons._id){
-          index = i
-          break;
+      if(title=='zhichu'){
+
+        for(let i=0;i<this.data.showZhichu.length;i++){
+          if(this.data.showZhichu[i]._id==this.data.bookingData.typeIcons._id){
+            index = i
+            break;
+          }
+        }
+      }else{
+        for(let i=0;i<this.data.showShouru.length;i++){
+          if(this.data.showShouru[i]._id==this.data.bookingData.typeIcons._id){
+            index = i
+            break;
+          }
         }
       }
       this.changeIcon(null,index)
@@ -769,6 +800,7 @@ Page({
       wx.navigateTo({
         url: '../auth/auth',
       })
+      return
     }
     let type = ''
     if(this.data.currentIndex==0){

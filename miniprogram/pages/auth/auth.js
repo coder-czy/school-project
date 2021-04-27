@@ -100,6 +100,65 @@ Page({
       })
     },
 
+    getUserProfile(){
+      wx.getUserProfile({
+        desc:'用于完善用户资料',
+        lang: 'zh_CN',
+        success:(res)=>{
+          console.log(res);
+          if (res.userInfo) {
+  
+                  //用户按了允许授权按钮
+            
+                  var that = this;
+            
+                  // 获取到用户的信息了，打印到控制台上看下
+            
+                  console.log("用户的信息如下：");
+            
+                  console.log(res.userInfo);
+          
+                  app.globalData.isAuth = true;
+                  app.globalData.userInfo = res.userInfo;
+                  wx.setStorage({
+                    key:"userInfo",
+                    data:res.userInfo
+                  }).then(res=>{
+                    console.log(res);
+                  }).catch(err=>{
+                    console.log(err);
+                  })
+                  this.getUserData()
+                  wx.navigateBack()
+            
+                } 
+        },
+        fail:(err)=>{
+          
+            
+                  //用户按了拒绝按钮
+                app.globalData.isAuth=false;
+                  wx.showModal({
+                    title: '警告',
+                    content: '您点击了拒绝授权，将无法正常使用记账功能！',
+                    showCancel: false,
+                    confirmText: '返回授权',
+                    success: function(res) {
+                      // 用户没有授权成功，不需要改变 isHide 的值
+                      if (res.confirm) {
+                        console.log('用户点击了“返回授权”');
+            
+                      }
+            
+                    }
+            
+                  });
+            
+                
+        }
+      })
+    },
+
 
     // 初始化用户数据
     initUserData(){

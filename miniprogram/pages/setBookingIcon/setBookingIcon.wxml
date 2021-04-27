@@ -15,7 +15,7 @@
 </view>
 
 
-<view class="title">更多类别</view>
+<view class="title" wx:if="{{isShow}}">更多类别</view>
 
 <view class="icon-item"  wx:for="{{type =='zhichu' ? zhichuDislikeIcon : shouruDislikeIcon}}" wx:key="index" >
   <view class="add-icon" bindtap="addIcon" data-icon="{{item}}">+</view>

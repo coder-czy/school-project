@@ -20,16 +20,15 @@ Page({
 
   },
   getBookingDataByIds:function(ids){
-    wx.showLoading({
-      title: '加载中...',
-    })
+    wx.showNavigationBarLoading()
     wx.cloud.callFunction({
       name:'get_bookingDataByIds',
       data:{
         ids:ids
       },
       success:res=>{
-        wx.hideLoading();
+        wx.hideNavigationBarLoading()
+
         console.log('res==>',res)
         let data = res.result.data
         data.forEach(item => {
@@ -41,6 +40,7 @@ Page({
         })
       },
       fail:err=>{
+        wx.hideNavigationBarLoading()
         console.log('err==>',err)
       }
     })

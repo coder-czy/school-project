@@ -95,21 +95,32 @@ Page({
    this.getUserInfo()
    this.getUserData()
    this.getdate()
-   this.findBookingDataByDate()
+  //  this.findBookingDataByDate()
    
   },
 
   
    // 获取用户信息
    getUserData(){
-     if(!app.globalData.isAuth){
-       return
-     }
+   let isAuth = app.globalData.isAuth
+      if(!isAuth){
+        let title= {
+         name: '100%',
+         color: '#333333',
+         fontSize: 16
+       }
+      let series=[{color:'#ffdd4a',data:100},{color:'#f2f2f2',data:0}]
+         this.drawPie(series,title)
+         return
+       }
+     
     wx.cloud.callFunction({
       name:'get_userData'
     }).then(res=>{
       console.log('userData==>',res);
      this.initData(res.result.data[0])
+     this.findBookingDataByDate()
+
     }).catch(err=>{
       console.log('err=>',err);
     })
@@ -145,10 +156,7 @@ Page({
     console.log(app.globalData);
     console.log('isAuth==>',isAuth)
     if(isAuth){
-            // 需授权才可使用
-            wx.getUserInfo({
-              success:res=>{
-                console.log('res==>',res)
+                let res = app.globalData
                 this.setData({
                   userInfo:{
                     img:res.userInfo.avatarUrl,
@@ -156,8 +164,6 @@ Page({
                   }
                 })
               }
-            })
-      }
     },
 
   // 用户授权登录
@@ -205,9 +211,16 @@ Page({
   getBookingData(start,end){
     // 如果未授权则阻止
     let isAuth = app.globalData.isAuth;
-    if(!isAuth){
-      return
-    }
+  //   if(!isAuth){
+  //    let title= {
+  //     name: '100%',
+  //     color: '#333333',
+  //     fontSize: 16
+  //   }
+  //  let series=[{color:'#ffdd4a',data:100},{color:'#f2f2f2',data:0}]
+  //     this.drawPie(series,title)
+  //     return
+  //   }
     wx.showNavigationBarLoading()
     wx.cloud.callFunction({
       name:"get_bookingByMonth",
@@ -285,6 +298,7 @@ Page({
         
       }
       this.setData({
+        allMonthData:data,
         bookingData:arr.reverse(),
         shouru:allShouru.toFixed(2),
         zhichu:allZhichu.toFixed(2),
@@ -471,24 +485,27 @@ Page({
     console.log('sendData==>',sendData);
     
     // 调用update方法
-    this.updateUserData(sendData)
+    this.updateUserData(sendData).then(res=>{
 
-    this.setData({
-      isCheckIn:true,
-      isShow:true
+      this.setData({
+        isCheckIn:true,
+        isShow:true,
+        continueBookingDate: sendData.continueBookingDate
+      })
     })
-    wx.cloud.callFunction({
-      name:'get_userData'
-    }).then(res=>{
-      console.log('userData==>',res);
-     let continueBookingDate = res.result.data[0].continueBookingDate
-     console.log('continueBookingDate',continueBookingDate);
-     this.setData({
-      continueBookingDate
-     })
-    }).catch(err=>{
-      console.log('err=>',err);
-    })
+
+    // wx.cloud.callFunction({
+    //   name:'get_userData'
+    // }).then(res=>{
+    //   console.log('userData==>',res);
+    //  let continueBookingDate = res.result.data[0].continueBookingDate
+    //  console.log('continueBookingDate',continueBookingDate);
+    //  this.setData({
+    //   continueBookingDate
+    //  })
+    // }).catch(err=>{
+    //   console.log('err=>',err);
+    // })
    
   },
 
@@ -526,14 +543,17 @@ Page({
   // 更新userData
   updateUserData(data){
     let _this = this
-    wx.cloud.callFunction({
-      name:'update_userData',
-      data
-    }).then(res=>{
-      console.log('update==>',res);
-      
-    }).catch(err=>{
-      console.log(err);
+    return new Promise((resolve,reject)=>{
+
+      wx.cloud.callFunction({
+        name:'update_userData',
+        data
+      }).then(res=>{
+        console.log('update==>',res);
+        resolve()
+      }).catch(err=>{
+        console.log(err);
+      })
     })
   },
 
@@ -594,7 +614,9 @@ Page({
 
   // 跳转预算详情
   goToBudgetDetail(){
+    if(!app.globalData.isAuth) return
     let monthData = JSON.stringify(this.data.bookingData)
+    let allMonthData = JSON.stringify(this.data.allMonthData)
     let drawData =JSON.stringify( {
       surplus:this.data.surplus,
       budget:this.data.budget,
@@ -605,7 +627,7 @@ Page({
     let title = JSON.stringify(this.data.title)
  
     wx.navigateTo({
-      url: '../budgetDetail/budgetDetail?monthData='+monthData+'&drawData='+drawData+'&series='+series+'&title='+title,
+      url: '../budgetDetail/budgetDetail?monthData='+monthData+'&drawData='+drawData+'&series='+series+'&title='+title+'&allMonthData='+allMonthData,
     })
   }
   

@@ -20,9 +20,11 @@
   height: 240rpx;
 }
 .budget-box{
-  padding: 0 40rpx;
+  padding: 0 20rpx;
   font-size: 28rpx;
-  color: #4d4c4d;
+  color: #444;
+  font-weight: bold;
+
 }
 .pie{
   margin-left: -20rpx;
@@ -85,7 +87,21 @@
   
 }
 .cancle{
-  border-right: 1rpx solid #e8e8e9;
+  /* border-right: 1rpx solid #e8e8e9; */
+}
+.line-r{
+
+  height: 100%;
+  width: 1rpx;
+  background-color: #e8e8e9;
+  float: right;
+}
+.line-l{
+
+  height: 100%;
+  width: 1rpx;
+  background-color: #e8e8e9;
+  float: left;
 }
 .edit-btn{
   flex: 1;
@@ -121,7 +137,7 @@ input{
   line-height: 60rpx;
   font-size: 36rpx;
   text-align: center;
-  color:#e4e4e4;
+  color:#888;
   border-bottom: 1rpx solid #e8e8e8;
 }
 .text{
@@ -133,7 +149,7 @@ input{
   line-height: 60rpx;
   text-align: center;
   border-bottom: 1rpx solid #e8e8e8;
-  color:#e4e4e4;
+  color:#888;
   text-align: center;
   font-size:16px;
 }
@@ -143,5 +159,18 @@ input{
 .chart{
   background-color: #fff;
   margin-top: 20rpx;
+  padding-top: 20rpx;
   width: 100%;
+}
+.budget-title{
+  padding-left: 14rpx;
+  border-left:10rpx solid #ffdd4a;
+}
+.chart-title{
+  font-size: 28rpx ;
+  color: #444;
+  padding-left: 14rpx;
+  margin-left: 20rpx;
+  border-left:10rpx solid #ffdd4a;
+  font-weight: bold;
 }

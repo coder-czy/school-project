@@ -1,8 +1,9 @@
 //app.js
 // 主题色：#ffda44/#7c7c7c
-
+// let app = getApp()
 App({
   onLaunch: function () {
+    let that = this 
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -23,19 +24,33 @@ App({
       // 获取设备信息
       this.getSystemInfo();
 
+      wx.getStorage({
+        key: 'userInfo',
+      }).then(res=>{
+        console.log('userInfo',res);
+        that.globalData.userInfo = res.data
+        that.globalData.isAuth = true
+        
+      }).catch(err=>{
+        console.log('userInfo-err',err);
+        that.globalData.isAuth = false
+
+      })
+
       
     // 授权
-    wx.getSetting({
-      success:res=>{
-        console.log('res==>',res)
+    // wx.getSetting({
+    //   success:res=>{
+    //     console.log('res==>',res)
 
-        this.globalData.isAuth = res.authSetting['scope.userInfo'];
-      }
-    })
+    //     this.globalData.isAuth = res.authSetting['scope.userInfo'];
+    //   }
+    // })
   },
   onShow: function () {
     //隐藏系统tabbar
     wx.hideTabBar();
+   
   },
 // 获取系统信息
   getSystemInfo: function () {
@@ -64,6 +79,7 @@ App({
 
   globalData: {
     userInfo: null,
+    isAuth:false,  //test
     
     tabBar:{
       "backgroundColor": "#ffffff",

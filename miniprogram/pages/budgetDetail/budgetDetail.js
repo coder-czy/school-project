@@ -6,6 +6,7 @@ const app = getApp()
 
 let chart = null
 let data =[]
+let val = []
 function initChart(canvas, width, height, dpr) {
   chart = echarts.init(canvas, null, {
     width: width,
@@ -15,99 +16,90 @@ function initChart(canvas, width, height, dpr) {
   chart.showLoading(); // 首次显示加载动画
   canvas.setChart(chart);
   
-var dataBJ = [
-  
-  [367,216,280,4.8,308,64,9],
-
-];
-
-
-var lineStyle = {
-  normal: {
-      width: 1,
-      opacity: 0.5
-  }
-};
-
-let option = {
-  // backgroundColor: '#161627',
-  title: {
-      text: '预算使用详细',
-      left: 'center',
-      textStyle: {
-          color: '#eee'
-      }
-  },
-  legend: {
-      bottom: 5,
-      data: ['北京'],
-      itemGap: 20,
-      textStyle: {
-          color: '#fff',
-          fontSize: 14
-      },
-      selectedMode: 'single'
-  },
-  // visualMap: {
-  //     show: true,
-  //     min: 0,
-  //     max: 20,
-  //     dimension: 6,
-  //     inRange: {
-  //         colorLightness: [0.5, 0.8]
-  //     }
+ let option = {
+  // title: {
+  //     text: '预算支出明细',
+  //     left:10,
+  //     top:10,
+  //     textStyle: {
+  //       color:'#444',
+  //       fontSize:'14'
+  //   }
+    
   // },
-  radar: {
-    radius:'60%',
-      indicator: [
-          {name: 'AQI', },
-          {name: 'PM2.5', },
-          {name: 'PM10', },
-          {name: 'CO', },
-          {name: 'NO2', },
-          {name: 'SO2', }
-      ],
-      shape: 'circle',
-      splitNumber: 5,
-      name: {
-          textStyle: {
-              color: 'rgb(238, 197, 102)'
-          }
-      },
-      splitLine: {
-          lineStyle: {
-              color: [
-                  'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
-                
-              ].reverse()
-          }
-      },
-      splitArea: {
-          show: false
-      },
-      axisLine: {
-          lineStyle: {
-              color: 'rgba(238, 197, 102, 0.5)'
-          }
-      }
-  },
-  series: [
+
+  radar: [
       {
-          name: '北京',
-          type: 'radar',
-          lineStyle: lineStyle,
-          data: dataBJ,
-          symbol: 'none',
-          itemStyle: {
-              color: '#F9713C'
+        
+          
+          splitArea: {
+              areaStyle: {
+                  color: ['rgba(114, 172, 209, 0.2)',
+                      'rgba(114, 172, 209, 0.4)', 'rgba(114, 172, 209, 0.6)',
+                      'rgba(114, 172, 209, 0.8)', 'rgba(114, 172, 209, 1)'],
+                  shadowColor: 'rgba(0, 0, 0, 0.3)',
+                  shadowBlur: 10
+              }
           },
-          areaStyle: {
-              opacity: 0.1
+          
+          axisLine: {
+              lineStyle: {
+                  color: 'rgba(255, 255, 255, 0.5)'
+              }
+          },
+          splitLine: {
+              lineStyle: {
+                  color: 'rgba(255, 255, 255, 0.5)'
+              }
           }
       },
-   
+      {
+          indicator: data,
+          center: ['50%', '50%'],
+          radius: 120,
+          name: {
+            textStyle: {
+                color: '#444'
+            }
+        },
+      }
+  ],
+  series: [
+     
+      {
+          name: '支出',
+          type: 'radar',
+          radarIndex: 1,
+          clolor:'#ffdd4a',
+          data: [
+              {
+                  value:val,
+                  name: '预算',
+                  areaStyle:{
+                    color:'#ffdd4a',
+                    opacity:0.5
+                  },
+                  lineStyle:{
+                    color:'#ffdd4a'  
+                  },
+                  itemStyle:{
+                    color:'#ffdd4a'
+                  },
+                  label: {
+                     color:'#ffdd4a',
+                      show: true,
+                     
+                    
+                      formatter: function(params) {
+                          return params.value;
+                      }
+                  }
+              },
+              
+          ]
+      }
   ]
-};
+}
   chart.hideLoading(); // 隐藏加载动画
   chart.setOption(option);
   return chart;
@@ -156,8 +148,10 @@ Page({
     let drawData = JSON.parse(options.drawData)
     let series = JSON.parse(options.series)
     let title = JSON.parse(options.title)
+    let allMonthData = JSON.parse(options.allMonthData)
     this.setData({
       monthData,
+      allMonthData,
       surplus:drawData.surplus,
       budget:drawData.budget,
       zhichu:drawData.zhichu,
@@ -168,6 +162,13 @@ Page({
       
     })
     this.drawPie(series,title)
+    // this.getDrawData()
+    if(this.data.allMonthData.length<=0){
+      this.setData({
+        isHasData:false
+      })
+    }
+    console.log(this.data.allMonthData);
   },
 
  
@@ -179,6 +180,8 @@ Page({
     this.setData({
       month:nowMonth+1
     })
+    this.getDrawData()
+
   },
 
     // 画饼图
@@ -227,6 +230,73 @@ Page({
       this.setData({
         isShow:true
       })
+    },
+
+    getDrawData(){
+      let allMonthData = this.data.allMonthData.filter(val=>val.titles.type=='zhichu')
+      let obj = {}
+      allMonthData.forEach(val => {
+        if(!obj[val.typeIcons.title]){
+          obj[val.typeIcons.title] = val.money*1
+        }else{
+          obj[val.typeIcons.title] += val.money*1
+        
+        }
+      });
+      console.log(obj);
+
+      let indicator= []
+      let value= []
+      let keys = Object.keys(obj)
+      if(keys.length<5){
+        console.log(keys.indexOf('医疗'));
+        if(keys.indexOf('餐饮')<-1){
+          indicator.push({text:'餐饮',max:10})
+          value.push(0)
+        }
+         if(keys.indexOf('其他')<0){
+          indicator.push({text:'其他',max:10})
+          value.push(0)
+        }
+         if(keys.indexOf('日用')<0){
+          indicator.push({text:'日用',max:10})
+          value.push(0)
+        }
+         if(keys.indexOf('交通')<0){
+          indicator.push({text:'交通',max:10})
+          value.push(0)
+        }
+         if(keys.indexOf('话费')<0){
+          indicator.push({text:'话费',max:10})
+          value.push(0)
+        }
+         if(keys.indexOf('医疗')<0){
+          console.log(11);
+          indicator.push({text:'医疗',max:10})
+          value.push(0)
+        }
+      }
+      for(let key in obj){
+        
+        indicator.push({
+          text: key,
+          max :Math.ceil(obj[key]/10)*10
+        })
+        value.push(obj[key])
+      }
+      console.log(indicator,value);
+      data = indicator
+      val = value
+      // chart.setOption({
+      //   series:[{
+      //     data:[
+      //       {
+      //         value
+      //       }
+      //     ]
+          
+      //   }]
+      // })
     },
   
     

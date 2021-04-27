@@ -42,11 +42,11 @@
 
   <view class="month-type {{isHasData ? '' : 'hide'}}">
     <view class="chart" style="width:100%;height:250px;">
-    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
+    <ec-canvas force-use-old-canvas="true" id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ec }}"></ec-canvas>
   </view>
   <view class="zhichu-rank">支出排行</view>
   <view class="list" >
-        <view class="list-item clearfix" wx:for="{{rankData}}" wx:key="index" data-id="{{item._id}}" bindtap="goDetail">
+        <view class="list-item clearfix" wx:for="{{rankData}}" wx:key="index" data-id="{{item._id}}">
           <view class="fl list-item-rank">{{index+1}}</view>
           <view class="fl list-item-img">
             <image class="auto-img list-icon" src="{{item.typeIcons.icon}}" mode="widthFix"></image>
@@ -71,7 +71,7 @@
 <!-- 折线图 -->
   <view class="month-type {{isHasData ? '' : 'hide'}}">
     <view class="chart" style="width:100%;height:250px;">
-    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ecs }}"></ec-canvas>
+    <ec-canvas force-use-old-canvas="true" id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ecs }}"></ec-canvas>
   </view>
    <view class="qushi-box">
     <view class="zhichu-qushi">
@@ -92,7 +92,7 @@
   <!-- zhu线图 -->
   <view class="month-type {{isHasData ? '' : 'hide'}}">
     <view class="chart" style="width:100%;height:250px;">
-    <ec-canvas id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ect }}"></ec-canvas>
+    <ec-canvas force-use-old-canvas="true" id="mychart-dom-pie2" canvas-id="mychart-pie2" ec="{{ ect }}"></ec-canvas>
     </view>
   <view class="zhichu-rank">{{bookingData.month}}月支出前三的类别</view>
 

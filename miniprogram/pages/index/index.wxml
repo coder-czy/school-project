@@ -13,7 +13,7 @@
       
       <view class="fl month ">
       <!-- 时间选择器 -->
-      <picker mode="date" value="{{time}}" fields="month" start="1990-01-01" end="{{end}}" bindchange="bindTimeChange">
+      <picker mode="date" value="{{time}}" fields="month" start="1990-01-01" end="{{setEnd}}" bindchange="bindTimeChange">
           <text class="month-num">{{month}}</text>月
           <view class="triangle"></view>
         </picker>

@@ -38,4 +38,7 @@
 font-size: 17.5px;
   
   }
+  page{
+    height: 100%;
+  }
   
